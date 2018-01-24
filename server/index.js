@@ -18,6 +18,15 @@ app.get('*', function (req, res, next) {
   res.sendFile(path.join(__dirname, '../public/index.html'))
 })
 
+app.post('/input', (req, res, next) => {
+    const dummyResponse = {
+        humanWord: req.body.input,
+        machineWord: 'Word'
+    }
+    res.json(dummyResponse)
+    //Rays code goes here
+})
+
 app.use(function (err, req, res, next) {
     console.error(err)
     console.error(err.stack)
