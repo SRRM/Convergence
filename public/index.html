@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Convergence</title>
     <!-- <script src="bundle.js" defer></script> -->
+    <script defer>
+        const daButton = document.getElementById("submit-button")
+        const daInput = document.getElementById("human-input")
+        
+    </script>
     <style>
         body{
             font-size: 16px;
@@ -30,10 +35,12 @@
         CONVERGENCE
     </h1>
     <div id="user-interface">
-        <h2>AI Word</h2>
+        <h2>Last AI Word</h2>
+        <h2>Last Human Word</h2>
         <input
+        id="human-input"
         >
-        <button>
+        <button id="submit-button">
             SUBMIT
         </button>
     </div>
