@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Convergence</title>
     <!-- <script src="bundle.js" defer></script> -->
-    <script defer>
-        const daButton = document.getElementById("submit-button")
-        const daInput = document.getElementById("human-input")
-        
-    </script>
+    
     <style>
         body{
             font-size: 16px;
@@ -35,8 +31,8 @@
         CONVERGENCE
     </h1>
     <div id="user-interface">
-        <h2>Last AI Word</h2>
-        <h2>Last Human Word</h2>
+        <h2 id="daMachineWord">Last AI Word</h2>
+        <h2 id="daHumanWord">Last Human Word</h2>
         <input
         id="human-input"
         >
@@ -45,5 +41,33 @@
         </button>
     </div>
   <div id="app"></div>
+  <script defer>
+        const daButton = document.getElementById("submit-button")
+        const daInput = document.getElementById("human-input")
+        const daHumanWord = document.getElementById("daHumanWord")
+        const daMachineWord = document.getElementById("daMachineWord")
+        console.log(daInput)
+        daButton.addEventListener('click', evt => {
+            const value = daInput.value
+            console.log('json', JSON.stringify({input: value}))
+            fetch("/rays",
+                {
+                    method: "POST",
+                    body: JSON.stringify({input: value}),
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        })
+                })
+            .then(function(res){ return res.json(); })
+            .then(function(data){
+                const randomIndex = Math.floor(Math.random() * data.otherSimilarWords.length)
+                const selectedWord = data.otherSimilarWords[randomIndex]
+                console.log( selectedWord )
+                daHumanWord.textContent = value
+                daMachineWord.textContent = selectedWord 
+            })
+        })
+    </script>
 </body>
 </html>
