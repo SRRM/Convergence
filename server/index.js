@@ -3,7 +3,8 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
-const wordnet = require('wordnet')
+const w2v = require( 'word2vec' )
+
 
 app.use(morgan('dev'))
 app.use(express.static(path.join(__dirname, '../static/')))
@@ -27,30 +28,28 @@ app.post('/input', (req, res, next) => {
     res.json(dummyResponse)
 })
 
-app.post('/rays', (req, res, next) => {
+app.post('/proof', function (req, res, next) {
+  const computerWord = "water"
   const userInput = req.body.input
-  console.log('req.body', req.body)
-  if (wordnet.lookup) console.log(userInput)
-  wordnet.lookup(userInput, (err, definitions) => {
-    if (err) console.log(err)
-    let result = {}
-    definitions && definitions.forEach(definition => {
-      let similarWords = definition.meta.words.map(word => {
-        return word.word.replace(/_/g, ' ')
-      })
-      let otherwords = definition.meta.pointers.filter(pointer => {
-        return Object.keys(pointer.data).length
-      }).map(pointer => {
-        return pointer.data.meta.words.map(word => {
-          return word.word.replace(/_/g, ' ')
-        })
-      }).join(',')
-      .split(',')
-      result.similarWords = result.similarWords ? result.similarWords.concat(similarWords) : similarWords
-      result.otherSimilarWords = result.otherSimilarWords ? result.otherSimilarWords.concat(otherwords) : otherwords
+
+  const getModelAsync = () => new Promise((resolve, reject) => {
+      w2v.loadModel( path.join(__dirname, '../trainingText/vectors.txt'), ( err, data ) => {
+        if (err !== null) return reject(err);
+        resolve(data);
+      });
     });
-    res.send(result)
-  })
+  getModelAsync().then(model => {
+  let vector1, vector2, vector3, vector4, midpointVector, nearestWord
+  vector1 = model.getVector( computerWord)
+    vector2 = model.getVector( userInput)
+    vector3 = model.getVector( 'animal')
+    vector4 = model.getVector( 'food')
+    midpointVector = vector1.add(vector2).add(vector3).add(vector4)
+    nearestWord = model.getNearestWords(midpointVector, 20)
+    console.log(nearestWord)
+    res.json(nearestWord)
+    })
+
 })
 
 app.use(function (err, req, res, next) {
