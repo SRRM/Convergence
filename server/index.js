@@ -7,7 +7,7 @@ const w2v = require( 'word2vec' )
 
 
 app.use(morgan('dev'))
-app.use(express.static(path.join(__dirname, '../static/')))
+app.use(express.static(path.join(__dirname, '../public/')))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // The only thing after this might be a piece of middleware to serve up 500 errors for server problems
 // (However, if you have middleware to serve up 404s, that go would before this as well)
 app.get('*', function (req, res, next) {
-  res.sendFile(path.join(__dirname, '../public/index.html'))
+  res.sendFile(path.join(__dirname, '../public/'))
 })
 
 app.post('/input', (req, res, next) => {
