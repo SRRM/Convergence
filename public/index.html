@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Convergence</title>
     <!-- <script src="bundle.js" defer></script> -->
-    
+
     <style>
         body{
             font-size: 16px;
@@ -61,11 +61,12 @@
                 })
             .then(function(res){ return res.json(); })
             .then(function(data){
-                const randomIndex = Math.floor(Math.random() * data.otherSimilarWords.length)
-                const selectedWord = data.otherSimilarWords[randomIndex]
-                console.log( selectedWord )
+                const randomIndex = Math.floor(Math.random() * data.length)
+                const selectedWord = data[randomIndex].word
+                // const result = data.map(d => d.word).filter(word => word!==value)
+                console.log(data)
                 daHumanWord.textContent = value
-                daMachineWord.textContent = selectedWord 
+                daMachineWord.textContent = selectedWord
             })
         })
     </script>

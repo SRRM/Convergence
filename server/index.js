@@ -42,14 +42,13 @@ app.post('/proof', function (req, res, next) {
   let vector1, vector2, vector3, vector4, midpointVector, nearestWord
   vector1 = model.getVector( computerWord)
     vector2 = model.getVector( userInput)
-    vector3 = model.getVector( 'animal')
-    vector4 = model.getVector( 'food')
-    midpointVector = vector1.add(vector2).add(vector3).add(vector4)
-    nearestWord = model.getNearestWords(midpointVector, 20)
+    // vector3 = model.getVector( 'animal')
+    // vector4 = model.getVector( 'food')
+    midpointVector = vector1.add(vector2)
+    nearestWord = model.getNearestWords(midpointVector, 20).filter(words => words.word !== userInput && words.word !== computerWord)
     console.log(nearestWord)
     res.json(nearestWord)
     })
-
 })
 
 app.use(function (err, req, res, next) {
