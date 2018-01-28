@@ -5,7 +5,8 @@
   "main": "./server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": "nodemon server/index.js"
+    "start-dev": "nodemon server/index.js",
+    "go-dev": "nodemon server/forker.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,10 @@
     "nodemon": "^1.14.11",
     "word2vec": "^1.1.2",
     "wordnet": "^0.1.2"
+  },
+  "devDependencies": {
+    "chalk": "^2.3.0",
+    "require-reload": "^0.2.2",
+    "watch": "^1.0.2"
   }
 }
