@@ -1,14 +1,15 @@
+const path = require('path')
+const express = require('express')
+const app = express()
+const morgan = require('morgan')
+const bodyParser = require('body-parser')
+const w2v = require('word2vec')
+const reload = require('require-reload')(require)
+const model = reload('./worker/vecroute')
 
 async function asyncApp() {
 
-  const path = require('path')
-  const express = require('express')
-  const app = express()
-  const morgan = require('morgan')
-  const bodyParser = require('body-parser')
-  const w2v = require('word2vec')
-
-  const gameHistory = {
+  let gameHistory = {
     userHistory: [],
     computerHistory: [],
   }
@@ -33,6 +34,10 @@ async function asyncApp() {
   // The only thing after this might be a piece of middleware to serve up 500 errors for server problems
   // (However, if you have middleware to serve up 404s, that go would before this as well)
   app.get('*', function (req, res, next) {
+    gameHistory = {
+      userHistory: [],
+      computerHistory: [],
+    }
     res.sendFile(path.join(__dirname, '../public/index.html'))
   })
 
@@ -54,7 +59,7 @@ async function asyncApp() {
     if (gameHistory.userHistory.length) {
       wordCloud = model.mostSimilar(`${gameHistory.userHistory[0]} ${gameHistory.computerHistory[0]}`, 20)
       console.log(wordCloud)
-      computerWord = wordCloud.filter(x => [...gameHistory.userHistory,...gameHistory.computerHistory].indexOf(x.word) === -1)[0].word
+      computerWord = wordCloud.filter(x => [...gameHistory.userHistory, ...gameHistory.computerHistory].indexOf(x.word) === -1)[0].word
     } else {
       computerWord = "water"
     }
@@ -72,7 +77,7 @@ async function asyncApp() {
     console.log('computer word:', computerWord)
     console.log('user input:', userInput)
     // console.log(nearestWord)
-    res.json({computerWord, userInput})
+    res.json({ computerWord, userInput })
 
   })
 
@@ -92,7 +97,7 @@ async function asyncApp() {
 
 }
 
-asyncApp()
+module.exports = asyncApp()
 
 // app.use(morgan('dev'))
 // app.use(express.static(path.join(__dirname, '../static/')))
