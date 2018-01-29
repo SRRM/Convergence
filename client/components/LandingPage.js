@@ -12,9 +12,9 @@ export const LandingPage = () => {
                 <h1 id="title">Convergence</h1>
                 
                 <NavLink to="/tutorial/1">
-                <h2>
-                    Play
-                </h2>
+                    <button className="center-action-button">
+                        Play
+                    </button>
                 </NavLink>
             </div>
 
@@ -24,21 +24,32 @@ export const LandingPage = () => {
                     line_linked: {
                         shadow: {
                             enable: true,
-                            color: '#F7A859',
+                            color: '#F990A2',
                             blur: 5
                         }
                     },
                     shape: {
+                        type: "polygon",
                         polygon: {
                           nb_sides: 5
                         },
+                    },
+                    size: {
+                        value: 10,
+                        random: true,
+                        anim: {
+                          enable: false,
+                          speed: 80,
+                          size_min: 0.1,
+                          sync: false
+                        }
                     }
                 }
             }}
           style={
             {
                 width: '100%',
-                background: 'linear-gradient(#DAEDE3, #9DACE0, #F9C2DF)'
+                background: 'linear-gradient(#C9D2F2, #F9D9EA, #F7D091)'
             }
           }
              

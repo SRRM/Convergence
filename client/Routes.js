@@ -26,12 +26,12 @@ class Routes extends Component {
               path="/"
             />
 
-            {/* <Route
+            { <Route
               component={TutorialSlideOne}
               exact
               path="/tutorial/1"
             />
-
+              /*
             <Route
               component={TutorialSlideTwo}
               exact

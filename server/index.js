@@ -64,7 +64,8 @@ async function asyncApp() {
     });
   });
 
-  let model = await getModel()
+  // let model = await getModel()
+  let model = {}
 
   // const getModelAsync = async () => {
   //   model = await getModel()
