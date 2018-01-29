@@ -5,7 +5,7 @@ import Particles from 'react-particles-js'
 
 export const LandingPage = () => {
     return (
-       
+
         <div >
 
             <div id="overlay">
@@ -36,9 +36,16 @@ export const LandingPage = () => {
                 background: 'linear-gradient(#DAEDE3, #9DACE0, #F9C2DF)'
             }
           }
-             
+
              />
-             
+            <h1>Convergence</h1>
+
+            <NavLink to="/tutorial/1">
+            <h2>
+                Play
+            </h2>
+            </NavLink>
+            <NavLink to="/gameplay/summary"> <h2>Gameplay Summary</h2></NavLink>
         </div>
     )
 }
