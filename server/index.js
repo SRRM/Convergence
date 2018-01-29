@@ -5,7 +5,7 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const w2v = require('word2vec')
 const reload = require('require-reload')(require)
-const commonWords = require('../trainingText/commonWords')
+const commonWords = require('./commonWords')
 // const wixFetch = reload('wix-fetch').fetch
 // const model = reload('./worker/vecroute')
 
