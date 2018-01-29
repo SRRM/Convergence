@@ -3,14 +3,16 @@ import { connect } from 'react-redux'
 import { Route, Switch, Router } from 'react-router-dom'
 import history from './history'
 import Main from './components/Main'
-import {LandingPage } from './components/LandingPage'
 import {GameplaySummary } from './components/GameplaySummary'
+import { LandingPage } from './components/LandingPage'
+
 import store from './store'
+import { axios } from 'axios'
 
 
 class Routes extends Component {
   componentDidMount() {
-  //do we need to load anything?
+    //do we need to load anything?
   }
 
   render() {
@@ -20,7 +22,7 @@ class Routes extends Component {
 
         <Main>
           <Switch>
-          <Route
+            <Route
               component={LandingPage}
               exact path="/"
             />
@@ -64,6 +66,16 @@ class Routes extends Component {
             {/* Displays our Login component as a fallback */}
             <Route component={LandingPage} />
           </Switch>
+          <form onSubmit={
+            (e) => {
+              axios.post('/proof', { input: e.input.value })
+                .then(res => res.data)
+                .then(console.log)
+            }
+          }>
+            <input name="input" />
+            <button type='submit'>submit</button>
+          </form>
         </Main>
       </Router>
     )
@@ -83,7 +95,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
-    //   dispatch(me())
+      //   dispatch(me())
     }
   }
 }
