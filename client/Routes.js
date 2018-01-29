@@ -30,21 +30,15 @@ class Routes extends Component {
               exact path="/"
             />
 
-             <Route
+            <Route
               component={GameplaySummary}
-              exact path="/gameplay/summary" 
-              />
+              exact path="/gameplay/summary"
+            />
 
              <Route
-              component={TutorialSlideOne}
+              component={TutorialSlides}
               exact
-              path="/tutorial/1"
-            />
-              
-            <Route
-              component={TutorialSlideTwo}
-              exact
-              path="/tutorial/2"
+              path="/tutorial/:slideNumber"
             />
 
             {/* <Route
@@ -64,8 +58,8 @@ class Routes extends Component {
               exact
               path="/gameplay"
             />
-            
-            
+
+
 
 
             {/* Displays our Login component as a fallback */}
