@@ -7,17 +7,8 @@ export const LandingPage = () => {
     return (
        
         <div >
-
-            <div id="overlay">
-                <h1 id="title">Convergence</h1>
-                
-                <NavLink to="/tutorial/1">
-                    <button className="center-action-button">
-                        Play
-                    </button>
-                </NavLink>
-            </div>
-             
+           <h1>Tutorial</h1>
+           <p></p> 
         </div>
     )
 }

@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { Route, Switch, Router } from 'react-router-dom'
 import history from './history'
 import Main from './components/Main'
+import {GameplaySummary } from './components/GameplaySummary'
 import { LandingPage } from './components/LandingPage'
+
 import store from './store'
 import { axios } from 'axios'
 
@@ -17,16 +19,21 @@ class Routes extends Component {
     // const { isLoggedIn } = this.props
     return (
       <Router history={history}>
-        {/* <ErrorMessage/> */}
+
         <Main>
           <Switch>
             <Route
               component={LandingPage}
-              exact
-              path="/"
+              exact path="/"
             />
 
             { <Route
+
+              component={GameplaySummary}
+              exact path="/gameplay/summary" />
+
+            /* <Route
+
               component={TutorialSlideOne}
               exact
               path="/tutorial/1"
@@ -55,12 +62,8 @@ class Routes extends Component {
               exact
               path="/gameplay"
             />
+            */}
 
-            <Route
-              component={GameplaySummary}
-              exact
-              path="/gameplay/summary"
-            /> */}
 
             {/* Displays our Login component as a fallback */}
             <Route component={LandingPage} />
