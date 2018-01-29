@@ -2,10 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import store from '../client/store'
+import Routes from './Routes'
 
 ReactDOM.render(
   <Provider store={store}>
-    <h1>hello world</h1>
+    <Routes />
   </Provider>,
   document.getElementById('app')
 )
