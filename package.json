@@ -5,7 +5,7 @@
   "main": "./server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": "nodemon server/index.js",
+    "start-dev": "webpack -w && nodemon server/index.js",
     "go-dev": "nodemon server/forker.js"
   },
   "repository": {
@@ -37,7 +37,7 @@
   "devDependencies": {
     "chalk": "^2.3.0",
     "require-reload": "^0.2.2",
-    "watch": "^1.0.2"
+    "watch": "^1.0.2",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",

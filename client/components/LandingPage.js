@@ -24,9 +24,14 @@ export const LandingPage = () => {
                     line_linked: {
                         shadow: {
                             enable: true,
-                            color: "#F7A859",
+                            color: '#F7A859',
                             blur: 5
                         }
+                    },
+                    shape: {
+                        polygon: {
+                          nb_sides: 5
+                        },
                     }
                 }
             }}
