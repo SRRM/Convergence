@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const w2v = require('word2vec')
 const reload = require('require-reload')(require)
+const commonWords = require('../trainingText/commonWords')
 // const wixFetch = reload('wix-fetch').fetch
 // const model = reload('./worker/vecroute')
 
@@ -30,9 +31,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Make sure this is right at the end of your server logic!
 // The only thing after this might be a piece of middleware to serve up 500 errors for server problems
 // (However, if you have middleware to serve up 404s, that go would before this as well)
-app.get('*', function (req, res, next) {
-  res.sendFile(path.join(__dirname, '../public/'))
-})
+// app.get('*', function (req, res, next) {
+//   res.sendFile(path.join(__dirname, '../public/'))
+// })
 
 
 
@@ -95,13 +96,13 @@ async function asyncApp() {
       userHistory: [],
       computerHistory: [],
     }
-    res.sendFile(path.join(__dirname, '../public/index.html'))
+    res.sendFile(path.join(__dirname, '../public'))
   })
 
 
   app.post('/input', (req, res, next) => {
     const dummyResponse = {
-      humanWord: req.body.input,
+      humanWord: req.query.input,
       machineWord: 'Word'
     }
     res.json(dummyResponse)
@@ -134,11 +135,11 @@ async function asyncApp() {
       // console.log(wordCloud)
       computerWord = wordCloud.filter(x => [...gameHistory.userHistory, ...gameHistory.computerHistory].indexOf(x.word) === -1)[0].word
     } else {
-      computerWord = "water"
+      computerWord = commonWords[Math.floor(Math.random()*commonWords.length)]
     }
     let ourRes
     // try {
-    //   let ourRes = getSynonyms(req.body.input);
+    //   let ourRes = getSynonyms(req.query.input);
     //   let theRes = await ourRes
     //   let syns = theRes.data.synonyms
     //   console.log(syns)
@@ -146,18 +147,18 @@ async function asyncApp() {
     //   console.error(err)
     // }
 
-    // console.log(await getSynonyms(req.body.input))
+    // console.log(await getSynonyms(req.query.input))
 
-    gameHistory.userHistory.unshift(req.body.input)
+    gameHistory.userHistory.unshift(req.query.input)
     gameHistory.computerHistory.unshift(computerWord)
 
-    const userInput = req.body.input
+    const userInput = req.query.input
 
     let userCloud = model.mostSimilar(userInput, 10)
     let computerCloud = model.mostSimilar(computerWord, 10)
 
-    // console.log('computer word:', computerWord)
-    // console.log('user input:', userInput)
+    console.log('computer word:', computerWord)
+    console.log('user input:', userInput)
     // console.log(nearestWord)
     res.json({ computerWord, userInput, userCloud, computerCloud })
 
