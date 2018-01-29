@@ -27,6 +27,7 @@
     "wordnet": "^0.1.2"
   },
   "devDependencies": {
+    "axios": "^0.17.1",
     "chalk": "^2.3.0",
     "require-reload": "^0.2.2",
     "watch": "^1.0.2"

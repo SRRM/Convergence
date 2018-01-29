@@ -1,16 +1,19 @@
 const express = require('express')
 const reload = require('require-reload')(require)
 // const w2v = require('word2vec')
-
-
-let app = express()
+// const route = reload('../index')
+let server
+let app
 
 module.exports = {
   start: (shared) => {
     return new Promise((resolve, reject) => {
       try {
 
-        app.use('/', reload('../index'))
+        // app = express()
+        app = express()
+
+        app.use(shared)
         // app = express()
         // app.get('/', (req, res, next) => {
         //   res.json(shared)
@@ -22,10 +25,10 @@ module.exports = {
         //   res.json(['woah', shared])
         // })
 
-        // server = app.listen(3000, () => {
-        //   console.log('listening on localhost:3000...')
-        //   resolve()
-        // })
+        server = app.listen(3000, () => {
+          // console.log('listening on localhost:3000...')
+          resolve()
+        })
       }
       catch (error) {
         reject(error)

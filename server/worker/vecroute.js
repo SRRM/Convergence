@@ -1,10 +1,11 @@
 const reload = require('require-reload')(require)
 const w2v = require('word2vec')
+const path = require('path')
 
 let model
 
 const getModel = () => new Promise((resolve, reject) => {
-  w2v.loadModel(path.join(__dirname, '../trainingText/vectors.txt'), (err, data) => {
+  w2v.loadModel(path.join(__dirname, '../../trainingText/vectors.txt'), (err, data) => {
     if (err !== null) return reject(err);
     resolve(data);
   });
