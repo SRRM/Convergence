@@ -6,6 +6,8 @@ import Main from './components/Main'
 import {GameplaySummary } from './components/GameplaySummary'
 import { LandingPage } from './components/LandingPage'
 import { TutorialSlideOne } from './components/TutorialSlideOne'
+import { TutorialSlideTwo } from './components/TutorialSlideTwo'
+import {Gameplay} from './components/Gameplay'
 
 import store from './store'
 import { axios } from 'axios'
@@ -38,14 +40,14 @@ class Routes extends Component {
               exact
               path="/tutorial/1"
             />
-              {/*
+              
             <Route
               component={TutorialSlideTwo}
               exact
               path="/tutorial/2"
             />
 
-            <Route
+            {/* <Route
               component={TutorialSlideThree}
               exact
               path="/tutorial/3"
@@ -55,15 +57,15 @@ class Routes extends Component {
               component={GameplayStart}
               exact
               path="/gameplay/start"
-            />
+            /> */}
 
             <Route
               component={Gameplay}
               exact
               path="/gameplay"
             />
-            */
-            }
+            
+            
 
 
             {/* Displays our Login component as a fallback */}

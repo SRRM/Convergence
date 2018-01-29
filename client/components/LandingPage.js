@@ -8,6 +8,9 @@ export const LandingPage = () => {
       <div >
         <div id="overlay">
           <h1 id="title">Convergence</h1>
+          <h2>
+            A game of cooperative word alchemy
+          </h2>
           <NavLink to="/tutorial/1"> <h2> Play </h2></NavLink>
           <NavLink to="/gameplay/summary"> <h2>Gameplay Summary</h2></NavLink>
           <NavLink to="/tutorial/1">
@@ -15,6 +18,7 @@ export const LandingPage = () => {
                 Play
             </button>
           </NavLink>
+          <h2>MindReader Mode</h2>
         </div>
        <Particles
          params={{
@@ -22,7 +26,7 @@ export const LandingPage = () => {
             line_linked: {
               shadow: {
                 enable: true,
-                color: '#F990A2',
+                color: '#F97CA0',
                 blur: 5
               }
             },
