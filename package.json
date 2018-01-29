@@ -23,6 +23,7 @@
     "morgan": "^1.9.0",
     "nodemon": "^1.14.11",
     "react": "^16.2.0",
+    "react-d3-graph": "^1.0.0",
     "react-dom": "^16.2.0",
     "react-particles-js": "^2.1.0",
     "react-redux": "^5.0.6",

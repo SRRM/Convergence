@@ -19,7 +19,7 @@ import Particles from 'react-particles-js'
 
 export const LandingPage = () => {
     return (
-       
+
         <div >
              <Particles
              params={{
@@ -37,15 +37,16 @@ export const LandingPage = () => {
             {width: '100%',
             backgroundColor: '#000'}
           }
-             
+
              />
             <h1>Convergence</h1>
-            
+
             <NavLink to="/tutorial/1">
             <h2>
                 Play
             </h2>
             </NavLink>
+            <NavLink to="/gameplay/summary"> <h2>Gameplay Summary</h2></NavLink>
         </div>
     )
 }
