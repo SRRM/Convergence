@@ -1,6 +1,6 @@
 import React from 'react'
 import { Graph } from 'react-d3-graph';
-
+import { Grid } from 'semantic-ui-react'
 
  export const GameplaySummary = () => {
 
@@ -27,8 +27,16 @@ let dataObject = [ { word: 'water', dist: 1.0000000000000002 },
 { word: 'wells', dist: 0.5616654189087197 },
 { word: 'drainage', dist: 0.5616110027924677 } ]
 let nodes = dataObject.map(data => {
-  return {
-    id: data.word
+  if (data.word === 'water'){
+    return {
+      id: data.word,
+      color: 'red'
+    }
+  }
+  else {
+    return {
+      id: data.word
+    }
   }
 })
 let links = dataObject.map(data => {
@@ -83,29 +91,33 @@ const onMouseOutLink = function(source, target) {
     //  window.alert(`Mouse out link between ${source} and ${target}`);
 };
  return (
-   <div>
-    <Graph
-         id='graph-id' // id is mandatory, if no id is defined rd3g will throw an error
-         data={data}
-         config={myConfig}
-         onClickNode={onClickNode}
-         onClickLink={onClickLink}
-         onMouseOverNode={onMouseOverNode}
-         onMouseOutNode={onMouseOutNode}
-         onMouseOverLink={onMouseOverLink}
-         onMouseOutLink={onMouseOutLink}
-       />
-     <Graph
-          id='graph-id-2' // id is mandatory, if no id is defined rd3g will throw an error
-          data={data}
-          config={myConfig}
-          onClickNode={onClickNode}
-          onClickLink={onClickLink}
-          onMouseOverNode={onMouseOverNode}
-          onMouseOutNode={onMouseOutNode}
-          onMouseOverLink={onMouseOverLink}
-          onMouseOutLink={onMouseOutLink}
-        />
-      </div>
+     <Grid.Row>
+        <Grid.Column width={8}>
+          <Graph
+               id='graph-id' // id is mandatory, if no id is defined rd3g will throw an error
+               data={data}
+               config={myConfig}
+               onClickNode={onClickNode}
+               onClickLink={onClickLink}
+               onMouseOverNode={onMouseOverNode}
+               onMouseOutNode={onMouseOutNode}
+               onMouseOverLink={onMouseOverLink}
+               onMouseOutLink={onMouseOutLink}
+             />
+        </Grid.Column>
+        <Grid.Column width={8}>
+          <Graph
+               id='graph-id-2' // id is mandatory, if no id is defined rd3g will throw an error
+               data={data}
+               config={myConfig}
+               onClickNode={onClickNode}
+               onClickLink={onClickLink}
+               onMouseOverNode={onMouseOverNode}
+               onMouseOutNode={onMouseOutNode}
+               onMouseOverLink={onMouseOverLink}
+               onMouseOutLink={onMouseOutLink}
+             />
+        </Grid.Column>
+      </Grid.Row>
  )
 }
