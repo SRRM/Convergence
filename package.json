@@ -4,9 +4,10 @@
   "description": "Cooperative AI Wordplay Game",
   "main": "./server/index.js",
   "scripts": {
+    "build-client-watch": "webpack -w",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": "nodemon server/index.js",
-    "go-dev": "nodemon server/forker.js"
+    "go-dev": "NODE_ENV='development' npm run build-client-watch & nodemon server/forker.js"
   },
   "repository": {
     "type": "git",
@@ -19,10 +20,12 @@
   },
   "homepage": "https://github.com/SRRM/Convergence#readme",
   "dependencies": {
+    "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "morgan": "^1.9.0",
     "nodemon": "^1.14.11",
+    "package.json": "^2.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-particles-js": "^2.1.0",
@@ -37,7 +40,7 @@
   "devDependencies": {
     "chalk": "^2.3.0",
     "require-reload": "^0.2.2",
-    "watch": "^1.0.2"
+    "watch": "^1.0.2",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
