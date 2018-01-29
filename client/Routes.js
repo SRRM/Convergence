@@ -5,7 +5,7 @@ import history from './history'
 import Main from './components/Main'
 import {GameplaySummary } from './components/GameplaySummary'
 import { LandingPage } from './components/LandingPage'
-import { TutorialSlideOne } from './components/LandingPage'
+import { TutorialSlideOne } from './components/TutorialSlideOne'
 
 import store from './store'
 import { axios } from 'axios'
