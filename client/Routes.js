@@ -54,12 +54,11 @@ class Routes extends Component {
               exact
               path="/gameplay"
             />
-
+            */
             <Route
               component={GameplaySummary}
-              exact
-              path="/gameplay/summary"
-            /> */}
+              exact path="/gameplay/summary"
+            /> }
 
             {/* Displays our Login component as a fallback */}
             <Route component={LandingPage} />
