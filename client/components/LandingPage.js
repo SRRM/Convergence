@@ -15,6 +15,7 @@ export const LandingPage = () => {
                 Play
             </button>
           </NavLink>
+          <NavLink to="/wordgraph"> <h2> Word Graph </h2></NavLink>
         </div>
        <Particles
          params={{
