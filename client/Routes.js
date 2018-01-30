@@ -5,6 +5,7 @@ import history from './history'
 import Main from './components/Main'
 import {GameplaySummary } from './components/GameplaySummary'
 import { LandingPage } from './components/LandingPage'
+import  WordGraph  from './components/WordGraph'
 import { TutorialSlides } from './components/TutorialSlides'
 import {Gameplay} from './components/Gameplay'
 import {GameplayStart} from './components/GameplayStart'
@@ -31,6 +32,13 @@ class Routes extends Component {
               exact path="/"
             />
 
+
+            <Route
+             component={WordGraph}
+             exact path="/wordgraph"
+             />
+              {/*
+              
             <Route
               component={GameplaySummary}
               exact path="/gameplay/summary"
@@ -60,7 +68,7 @@ class Routes extends Component {
             {/* Displays our Login component as a fallback */}
             <Route component={LandingPage} />
           </Switch>
-          <form onSubmit={
+          {/* <form onSubmit={
             (e) => {
               e.preventDefault()
               axios.post('/proof', { input: e.target.input.value })
@@ -70,7 +78,7 @@ class Routes extends Component {
           }>
             <input name="input" />
             <button type='submit'>submit</button>
-          </form>
+          </form> */}
         </Main>
       </Router>
     )
