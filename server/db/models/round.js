@@ -25,7 +25,7 @@ const Round = db.define('round', {
     type: Sequelize.ARRAY(Sequelize.STRING)
   },
   cosineDist: {
-    type: Sequelize.DECIMAL
+    type: Sequelize.FLOAT
   },
   commonWords: {
     type: Sequelize.VIRTUAL,
