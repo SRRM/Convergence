@@ -31,7 +31,7 @@ const Round = db.define('round', {
     type: Sequelize.VIRTUAL,
     get() {
       let commonArray;
-      if (this.userWords){
+      if (this.userGuess){
         commonArray = this.userWords.filter((word) => this.machineOneWords.includes(word))
       } else {
         commonArray = this.machineOneWords.filter((word) => this.machineTwoWords.includes(word))
