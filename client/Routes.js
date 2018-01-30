@@ -12,7 +12,7 @@ import {Background} from './components/Background'
 
 import store from './store'
 import axios from 'axios'
-
+import Particles from 'react-particles-js'
 
 class Routes extends Component {
   componentDidMount() {
@@ -36,16 +36,12 @@ class Routes extends Component {
              component={WordGraph}
              exact path="/wordgraph"
              />
-
-             <Route
-               component={GameplaySummary}
-               exact path="/gameplay/summary"
-             />
-
-             
-              {/*
-
-
+              
+              
+            <Route
+              component={GameplaySummary}
+              exact path="/gameplay/summary"
+            />
 
              <Route
               component={TutorialSlides}
@@ -68,20 +64,44 @@ class Routes extends Component {
 
 
 
-            {/* Displays our Login component as a fallback */}
+            {/* Displays LandingPage as a fallback */}
             <Route component={LandingPage} />
           </Switch>
-          {/* <form onSubmit={
-            (e) => {
-              e.preventDefault()
-              axios.post('/proof', { input: e.target.input.value })
-                .then(res => res.data)
-                .then(console.log)
+          <Particles
+          className="particles"
+         params={{
+          particles: {
+            line_linked: {
+              shadow: {
+                enable: true,
+                color: '#F97CA0',
+                blur: 5
+              }
+            },
+            shape: {
+              type: "polygon",
+              polygon: {
+                nb_sides: 5
+              },
+            },
+            size: {
+              value: 10,
+              random: true,
+              anim: {
+                enable: false,
+                speed: 80,
+                size_min: 0.1,
+                sync: false
+              }
             }
-          }>
-            <input name="input" />
-            <button type='submit'>submit</button>
-          </form> */}
+          }
+        }}
+        style={{
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(#C9D2F2, #F9D9EA, #F7D091)'
+        }}
+     />
         </Main>
       </Router>
     )
