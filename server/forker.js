@@ -3,6 +3,7 @@ const reload = require('require-reload')(require)
 const chalk = require('chalk')
 const vecroute = require('./shared/vecroute')
 let worker = reload('./worker')
+// let model = await vecroute
 
 
 async function teardownWorker () {
@@ -32,9 +33,11 @@ async function teardownWorker () {
 
 const reloadWorker = async () => {
   try {
+
     await teardownWorker()
     worker = reload('./worker')
-    await worker.start(vecroute)
+    let model = await vecroute
+    await worker.start(model)
   }
   catch (error) {
     console.error(chalk.red('Encountered error while reloading the worker...'))

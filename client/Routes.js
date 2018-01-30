@@ -11,7 +11,7 @@ import {GameplayStart} from './components/GameplayStart'
 import {Background} from './components/Background'
 
 import store from './store'
-import { axios } from 'axios'
+import axios from 'axios'
 
 
 class Routes extends Component {
@@ -62,7 +62,8 @@ class Routes extends Component {
           </Switch>
           <form onSubmit={
             (e) => {
-              axios.post('/proof', { input: e.input.value })
+              e.preventDefault()
+              axios.post('/proof', { input: e.target.input.value })
                 .then(res => res.data)
                 .then(console.log)
             }
