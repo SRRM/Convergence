@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const commonWords = require('../commonWords')
 const w2v = require('word2vec')
+const reload = require('require-reload')(require)
 
 let gameHistory = {
   user: [],
@@ -13,7 +14,11 @@ let gameHistory = {
 
 module.exports = function (app, shared) {
 
+  console.log('routes index visited')
+
   // let model = shared
+
+
 
   const cloudToString = cloud => cloud.map(x => x.word).join(' ')
 
@@ -21,6 +26,9 @@ module.exports = function (app, shared) {
   app.use(express.static(path.join(__dirname, '../../public/')))
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+
+  reload('./api')(app, shared)
+
 
   app.get('*', (req, res, next) => {
     res.sendFile(path.join(__dirname, '../../public'))

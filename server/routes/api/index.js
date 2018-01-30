@@ -1,11 +1,20 @@
-const router = require('express').Router()
-module.exports = router
 
-router.use('/play', require('./play'))
-router.use('/games', require('./games'))
+// module.exports = router
+const reload = require('require-reload')(require)
 
-router.use((req, res, next) => {
-  const error = new Error('Not Found')
-  error.status = 404
-  next(error)
-})
+module.exports = function (app, shared) {
+
+  console.log('api index visited')
+
+  reload('./games')(app, shared)
+  reload('./play')(app, shared)
+
+  // router.use('/play', require('./play')(shared))
+  // router.use('/games', require('./games')(shared))
+  app.use('/api', (req, res, next) => {
+    const error = new Error('Not Found')
+    error.status = 404
+    next(error)
+  })
+
+}
