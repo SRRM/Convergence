@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const reload = require('require-reload')(require)
+const w2v =require('word2vec')
 const routes = reload('../routes')
 let server
 let app
@@ -9,6 +10,7 @@ module.exports = {
   start: (shared) => {
     return new Promise((resolve, reject) => {
       try {
+        console.log(shared)
         app = express()
         routes(app, shared)
 

@@ -5,12 +5,12 @@ import history from './history'
 import Main from './components/Main'
 import {GameplaySummary } from './components/GameplaySummary'
 import { LandingPage } from './components/LandingPage'
-import { TutorialSlideOne } from './components/TutorialSlideOne'
+import { TutorialSlides } from './components/TutorialSlideOne'
 import { TutorialSlideTwo } from './components/TutorialSlideTwo'
 import {Gameplay} from './components/Gameplay'
 
 import store from './store'
-import { axios } from 'axios'
+import axios from 'axios'
 
 
 class Routes extends Component {
@@ -67,7 +67,8 @@ class Routes extends Component {
           </Switch>
           <form onSubmit={
             (e) => {
-              axios.post('/proof', { input: e.input.value })
+              e.preventDefault()
+              axios.post('/proof', { input: e.target.input.value })
                 .then(res => res.data)
                 .then(console.log)
             }
