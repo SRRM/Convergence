@@ -60,17 +60,6 @@ class Routes extends Component {
             {/* Displays our Login component as a fallback */}
             <Route component={LandingPage} />
           </Switch>
-          <form onSubmit={
-            (e) => {
-              e.preventDefault()
-              axios.post('/proof', { input: e.target.input.value })
-                .then(res => res.data)
-                .then(console.log)
-            }
-          }>
-            <input name="input" />
-            <button type='submit'>submit</button>
-          </form>
         </Main>
       </Router>
     )

@@ -15,7 +15,7 @@ const slides = [
     <NavLink to="/gameplay">
       <button>next</button>
     </NavLink>
-    <NavLink to="/tutorial/2">
+    <NavLink to="/tutorial/1">
       <button>next</button>
     </NavLink>
   </div>,
@@ -28,7 +28,7 @@ const slides = [
     <NavLink to="/gameplay">
         <button>skip</button>
     </NavLink>
-    <NavLink to="/tutorial/3">
+    <NavLink to="/tutorial/2">
         <button>next</button>
     </NavLink>
   </div>,

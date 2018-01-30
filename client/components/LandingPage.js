@@ -9,10 +9,10 @@ export const LandingPage = () => {
         <div id="overlay">
           <h1 id="title">Convergence</h1>
           <h2>
-            A game of cooperative word alchemy
+            A Game of Cooperative Word Alchemy
           </h2>
-          <NavLink to="/gameplay/summary"> <h2>Gameplay Summary</h2></NavLink>
-          <NavLink to="/tutorial/1">
+          <NavLink to="/gameplay/summary"> <h2>Gameplay Summary[Dev]</h2></NavLink>
+          <NavLink to="/tutorial/0">
             <button className="center-action-button">
                 Play
             </button>
