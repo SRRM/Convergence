@@ -5,8 +5,7 @@ import history from './history'
 import Main from './components/Main'
 import {GameplaySummary } from './components/GameplaySummary'
 import { LandingPage } from './components/LandingPage'
-import { TutorialSlideOne } from './components/TutorialSlideOne'
-import { TutorialSlideTwo } from './components/TutorialSlideTwo'
+import { TutorialSlides } from './components/TutorialSlides'
 import {Gameplay} from './components/Gameplay'
 
 import store from './store'
@@ -42,16 +41,10 @@ class Routes extends Component {
             />
 
             {/* <Route
-              component={TutorialSlideThree}
-              exact
-              path="/tutorial/3"
-            />
-
-            <Route
               component={GameplayStart}
               exact
               path="/gameplay/start"
-            /> */}
+            />  */}
 
             <Route
               component={Gameplay}
