@@ -7,6 +7,8 @@ import {GameplaySummary } from './components/GameplaySummary'
 import { LandingPage } from './components/LandingPage'
 import { TutorialSlides } from './components/TutorialSlides'
 import {Gameplay} from './components/Gameplay'
+import {GameplayStart} from './components/GameplayStart'
+import {Background} from './components/Background'
 
 import store from './store'
 import { axios } from 'axios'
@@ -40,11 +42,11 @@ class Routes extends Component {
               path="/tutorial/:slideNumber"
             />
 
-            {/* <Route
+             <Route
               component={GameplayStart}
               exact
               path="/gameplay/start"
-            />  */}
+            />  
 
             <Route
               component={Gameplay}
