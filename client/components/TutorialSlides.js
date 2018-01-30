@@ -13,8 +13,8 @@ const slides = [
         the same word as the AI in subsequent rounds. 
         How might you accomplish such a challenging task?
       </p>
-      <NavLink to="/gameplay">
-        <button>next</button>
+      <NavLink to="/gameplay/start">
+        <button>Skip</button>
       </NavLink>
       <NavLink to="/tutorial/1">
         <button>next</button>
@@ -28,7 +28,7 @@ const slides = [
         to the words you and the AI have previously chosen. For example, if you choose 'lava' as 
         your first word, and the AI selects 'water', then 'liquid', 'caldera', and 'steam' might be 
         good guesses. You get a maximum of 20 chances to converge on the same word.</p>
-      <NavLink to="/gameplay">
+      <NavLink to="/gameplay/start">
           <button>skip</button>
       </NavLink>
       <NavLink to="/tutorial/2">

@@ -1,4 +1,5 @@
 import React from 'react'
+import {NavLink} from 'react-router-dom'
 
 
 export const GameplayStart = () => {
@@ -22,6 +23,11 @@ export const GameplayStart = () => {
                 >
                     SUBMIT 
                 </button>
+
+                <NavLink to="/gameplay">
+                    Gameplay
+                </NavLink>
+                
             </form>    
         </div>
     )
