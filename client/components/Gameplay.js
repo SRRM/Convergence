@@ -6,7 +6,7 @@ import store from '../store'
 
 export const Gameplay = () => {
     return (     
-        <div >
+        <div className="overlay" >
             <h2>Round #:</h2>
             <span>1</span>
            <h2>Computer chose:</h2>

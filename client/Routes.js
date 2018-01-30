@@ -13,7 +13,7 @@ import {Background} from './components/Background'
 
 import store from './store'
 import axios from 'axios'
-
+import Particles from 'react-particles-js'
 
 class Routes extends Component {
   componentDidMount() {
@@ -37,7 +37,7 @@ class Routes extends Component {
              component={WordGraph}
              exact path="/wordgraph"
              />
-              {/*
+              
               
             <Route
               component={GameplaySummary}
@@ -65,9 +65,44 @@ class Routes extends Component {
 
 
 
-            {/* Displays our Login component as a fallback */}
+            {/* Displays LandingPage as a fallback */}
             <Route component={LandingPage} />
           </Switch>
+          <Particles
+          className="particles"
+         params={{
+          particles: {
+            line_linked: {
+              shadow: {
+                enable: true,
+                color: '#F97CA0',
+                blur: 5
+              }
+            },
+            shape: {
+              type: "polygon",
+              polygon: {
+                nb_sides: 5
+              },
+            },
+            size: {
+              value: 10,
+              random: true,
+              anim: {
+                enable: false,
+                speed: 80,
+                size_min: 0.1,
+                sync: false
+              }
+            }
+          }
+        }}
+        style={{
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(#C9D2F2, #F9D9EA, #F7D091)'
+        }}
+     />
         </Main>
       </Router>
     )

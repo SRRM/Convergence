@@ -9,6 +9,7 @@
 
     <style>
         body{
+            height: 100%;
             font-size: 16px;
             margin: 0px;
             font-size: 16px;
@@ -32,11 +33,16 @@
             color: white;
         }
 
-        div#overlay {
+        div.overlay {
             position: absolute;
             height: 100%;
             width: 100%;
             z-index: 20;
+        }
+
+        div.particles, div#main, div#app {
+            height: 100vh;
+
         }
 
         .center-action-button {

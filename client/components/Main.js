@@ -13,7 +13,7 @@ import {withRouter, Link, NavLink} from 'react-router-dom'
 const Main = (props) => {
   const {children} = props
   return (
-    <div >
+    <div id="main">
         {children}
     </div>
   )
