@@ -5,6 +5,7 @@ import history from './history'
 import Main from './components/Main'
 import {GameplaySummary } from './components/GameplaySummary'
 import { LandingPage } from './components/LandingPage'
+import  WordGraph  from './components/WordGraph'
 import { TutorialSlides } from './components/TutorialSlides'
 import {Gameplay} from './components/Gameplay'
 import {GameplayStart} from './components/GameplayStart'
@@ -31,6 +32,13 @@ class Routes extends Component {
               exact path="/"
             />
 
+
+            <Route
+             component={WordGraph}
+             exact path="/wordgraph"
+             />
+              {/*
+              
             <Route
               component={GameplaySummary}
               exact path="/gameplay/summary"
