@@ -24,21 +24,19 @@ class Routes extends Component {
     // const { isLoggedIn } = this.props
     return (
       <Router history={history}>
-
         <Main>
           <Switch>
+
             <Route
               component={LandingPage}
               exact path="/"
             />
 
-
             <Route
              component={WordGraph}
              exact path="/wordgraph"
              />
-              
-              
+
             <Route
               component={GameplaySummary}
               exact path="/gameplay/summary"
@@ -51,10 +49,10 @@ class Routes extends Component {
             />
 
              <Route
-              component={GameplayStart}
-              exact
-              path="/gameplay/start"
-            />
+               component={GameplayStart}
+               exact
+               path="/gameplay/start"
+             />
 
             <Route
               component={Gameplay}
@@ -62,53 +60,49 @@ class Routes extends Component {
               path="/gameplay"
             />
 
-
-
-
             {/* Displays LandingPage as a fallback */}
             <Route component={LandingPage} />
           </Switch>
           <Particles
-          className="particles"
-         params={{
-          particles: {
-            line_linked: {
-              shadow: {
-                enable: true,
-                color: '#F97CA0',
-                blur: 5
+            className="particles"
+            params={{
+              particles: {
+                line_linked: {
+                  shadow: {
+                    enable: true,
+                    color: '#F97CA0',
+                    blur: 5
+                  }
+                },
+                shape: {
+                  type: "polygon",
+                  polygon: {
+                    nb_sides: 5
+                  },
+                },
+                size: {
+                  value: 10,
+                  random: true,
+                  anim: {
+                    enable: false,
+                    speed: 80,
+                    size_min: 0.1,
+                    sync: false
+                  }
+                }
               }
-            },
-            shape: {
-              type: "polygon",
-              polygon: {
-                nb_sides: 5
-              },
-            },
-            size: {
-              value: 10,
-              random: true,
-              anim: {
-                enable: false,
-                speed: 80,
-                size_min: 0.1,
-                sync: false
-              }
-            }
-          }
-        }}
-        style={{
-          width: '100%',
-          height: '100%',
-          background: 'linear-gradient(#C9D2F2, #F9D9EA, #F7D091)'
-        }}
-     />
+            }}
+            style={{
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(#C9D2F2, #F9D9EA, #F7D091)'
+            }}
+          />
         </Main>
       </Router>
     )
   }
 }
-
 
 const mapState = (state) => {
   return {

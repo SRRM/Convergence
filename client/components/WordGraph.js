@@ -24,6 +24,7 @@ export default class WordGraph extends Component {
       { word1:'water', dist: 0.9, word2:'sea'}
     ]
    return (
+     <div  className='overlay'>
      <Container>
        {
          arr.map((obj, idx) => {
@@ -43,6 +44,7 @@ export default class WordGraph extends Component {
          })
        }
      </Container>
+   </div>
    )
   }
 }
