@@ -1,7 +1,7 @@
 const express = require('express')
+const path = require('path')
 const reload = require('require-reload')(require)
-// const w2v = require('word2vec')
-// const route = reload('../index')
+const routes = reload('../routes')
 let server
 let app
 
@@ -9,24 +9,11 @@ module.exports = {
   start: (shared) => {
     return new Promise((resolve, reject) => {
       try {
-
-        // app = express()
         app = express()
-
-        app.use(shared)
-        // app = express()
-        // app.get('/', (req, res, next) => {
-        //   res.json(shared)
-        // })
-
-        // app.use('/vecroute', reload('./vecroute'))
-
-        // app.get('/spiderbank', (req, res, next) => {
-        //   res.json(['woah', shared])
-        // })
+        routes(app, shared)
 
         server = app.listen(3000, () => {
-          // console.log('listening on localhost:3000...')
+          console.log('listening on localhost:3000...')
           resolve()
         })
       }
@@ -34,7 +21,6 @@ module.exports = {
         reject(error)
       }
     })
-
   },
 
   teardown: () => {
