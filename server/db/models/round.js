@@ -6,32 +6,32 @@ const Round = db.define('round', {
   roundNum: {
     type: Sequelize.INTEGER,
   },
-  userGuess: {
+  userWord: {
     type: Sequelize.STRING
   },
   userWords: {
     type: Sequelize.ARRAY(Sequelize.STRING)
   },
-  machineOneGuess: {
+  machineOneWord: {
     type: Sequelize.STRING
   },
   machineOneWords: {
     type: Sequelize.ARRAY(Sequelize.STRING)
   },
-  machineTwoGuess: {
+  machineTwoWord: {
     type: Sequelize.STRING
   },
   machineTwoWords: {
     type: Sequelize.ARRAY(Sequelize.STRING)
   },
-  cosineDist: {
+  cosineDistance: {
     type: Sequelize.FLOAT
   },
   commonWords: {
     type: Sequelize.VIRTUAL,
     get() {
       let commonArray;
-      if (this.userGuess){
+      if (this.userWord){
         commonArray = this.userWords.filter((word) => this.machineOneWords.includes(word))
       } else {
         commonArray = this.machineOneWords.filter((word) => this.machineTwoWords.includes(word))
