@@ -2,6 +2,7 @@ import React from 'react'
 import { Graph } from 'react-d3-graph';
 import { Grid } from 'semantic-ui-react'
 
+// REVIEW: indentation
  export const GameplaySummary = () => {
 
 // graph payload (with minimalist structure)

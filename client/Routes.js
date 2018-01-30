@@ -5,11 +5,14 @@ import history from './history'
 import Main from './components/Main'
 import {GameplaySummary } from './components/GameplaySummary'
 import { LandingPage } from './components/LandingPage'
-import { TutorialSlideOne } from './components/TutorialSlideOne'
 import  WordGraph  from './components/WordGraph'
+import { TutorialSlides } from './components/TutorialSlides'
+import {Gameplay} from './components/Gameplay'
+import {GameplayStart} from './components/GameplayStart'
+import {Background} from './components/Background'
 
 import store from './store'
-import { axios } from 'axios'
+import axios from 'axios'
 
 
 class Routes extends Component {
@@ -29,47 +32,37 @@ class Routes extends Component {
               exact path="/"
             />
 
-             <Route
-              component={GameplaySummary}
-              exact path="/gameplay/summary"
-              />
-
-             <Route
-              component={TutorialSlideOne}
-              exact
-              path="/tutorial/1"
-            />
 
             <Route
              component={WordGraph}
              exact path="/wordgraph"
              />
               {/*
+              
             <Route
-              component={TutorialSlideTwo}
-              exact
-              path="/tutorial/2"
+              component={GameplaySummary}
+              exact path="/gameplay/summary"
             />
 
-            <Route
-              component={TutorialSlideThree}
+             <Route
+              component={TutorialSlides}
               exact
-              path="/tutorial/3"
+              path="/tutorial/:slideNumber"
             />
 
-            <Route
+             <Route
               component={GameplayStart}
               exact
               path="/gameplay/start"
-            />
+            />  
 
             <Route
               component={Gameplay}
               exact
               path="/gameplay"
             />
-            */
-            }
+
+
 
 
             {/* Displays our Login component as a fallback */}
@@ -77,7 +70,8 @@ class Routes extends Component {
           </Switch>
           {/* <form onSubmit={
             (e) => {
-              axios.post('/proof', { input: e.input.value })
+              e.preventDefault()
+              axios.post('/proof', { input: e.target.input.value })
                 .then(res => res.data)
                 .then(console.log)
             }
