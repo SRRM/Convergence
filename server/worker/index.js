@@ -1,8 +1,9 @@
 const express = require('express')
 const path = require('path')
 const reload = require('require-reload')(require)
-const w2v =require('word2vec')
+const w2v = require('word2vec')
 const routes = reload('../routes')
+const db = require('../db')
 let server
 let app
 
@@ -14,10 +15,18 @@ module.exports = {
         app = express()
         routes(app, shared)
 
-        server = app.listen(3000, () => {
-          console.log('listening on localhost:3000...')
-          resolve()
-        })
+        db.sync({ force: true })
+          .then(() => {
+            console.log('db synced')
+            server = app.listen(3000, () => {
+              console.log('listening on localhost:3000...')
+              resolve()
+            })
+          }).catch((error) => {
+            console.log(error)
+            reject(error)
+          })
+
       }
       catch (error) {
         reject(error)
