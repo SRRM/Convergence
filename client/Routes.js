@@ -8,7 +8,6 @@ import { LandingPage } from './components/LandingPage'
 import  WordGraph  from './components/WordGraph'
 import { TutorialSlides } from './components/TutorialSlides'
 import {Gameplay} from './components/Gameplay'
-import {GameplayStart} from './components/GameplayStart'
 import {Background} from './components/Background'
 
 import store from './store'
@@ -54,7 +53,7 @@ class Routes extends Component {
               component={GameplayStart}
               exact
               path="/gameplay/start"
-            />  
+            />
 
             <Route
               component={Gameplay}
