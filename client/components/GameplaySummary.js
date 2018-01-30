@@ -72,18 +72,25 @@ import {Container, Row, Col} from 'react-grid-system'
   if (data.word === 'water'){
     return {
       id: data.word,
-      color: 'red'
+      color: 'red',
+      fontSize: 18,
+      symbolType: 'star',
+      fontWeight: 'bold'
     }
   }
   else if (data.word === 'table'){
     return {
       id: data.word,
-      color: 'red'
+      color: 'red',
+      fontSize: 18,
+      symbolType: 'star',
+      fontWeight: 'bold'
     }
   }
   else {
     return {
-      id: data.word
+      id: data.word,
+      fontSize: 18
     }
   }
 })
@@ -110,12 +117,14 @@ import {Container, Row, Col} from 'react-grid-system'
       nodeHighlightBehavior: true,
       node: {
           color: 'lightgreen',
-          size: 120,
+          size: 220,
           highlightStrokeColor: 'blue'
       },
       link: {
           highlightColor: 'lightblue'
-      }
+      },
+      height : 800,
+      width : 1150
   };
 
 const onClickNode = function(nodeId) {
@@ -144,22 +153,18 @@ const onMouseOutLink = function(source, target) {
     //  window.alert(`Mouse out link between ${source} and ${target}`);
 };
  return (
-     <Container>
-       <Row>
-        <Col>
-          <Graph
-               id='graph-id' // id is mandatory, if no id is defined rd3g will throw an error
-               data={data}
-               config={myConfig}
-               onClickNode={onClickNode}
-               onClickLink={onClickLink}
-               onMouseOverNode={onMouseOverNode}
-               onMouseOutNode={onMouseOutNode}
-               onMouseOverLink={onMouseOverLink}
-               onMouseOutLink={onMouseOutLink}
-             />
-           </Col>
-        </Row>
-      </Container>
+    <div className='overlay'>
+      <Graph
+           id='graph-id' // id is mandatory, if no id is defined rd3g will throw an error
+           data={data}
+           config={myConfig}
+           onClickNode={onClickNode}
+           onClickLink={onClickLink}
+           onMouseOverNode={onMouseOverNode}
+           onMouseOutNode={onMouseOutNode}
+           onMouseOverLink={onMouseOverLink}
+           onMouseOutLink={onMouseOutLink}
+         />
+    </div>
  )
 }
