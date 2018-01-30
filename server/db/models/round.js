@@ -27,7 +27,18 @@ const Round = db.define('round', {
   cosineDist: {
     type: Sequelize.DECIMAL
   },
-  //shared words: don't need to be stored in the db - do we want a virtual
+  commonWords: {
+    type: Sequelize.VIRTUAL,
+    get() {
+      let commonArray;
+      if (this.userWords){
+        commonArray = this.userWords.filter((word) => this.machineOneWords.includes(word))
+      } else {
+        commonArray = this.machineOneWords.filter((word) => this.machineTwoWords.includes(word))
+      }
+      return [...new Set(commonArray)].join(' ')
+    }
+  }
 })
 
 module.exports = Round
