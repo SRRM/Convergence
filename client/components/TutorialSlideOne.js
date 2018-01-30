@@ -17,7 +17,7 @@ const slides = [
   </div>
 ]
 
-export const TutorialSlides = {matchParams} => {
+export const TutorialSlides = ({matchParams}) => {
   return slides[matchParams.slideNumber]
 }
 
