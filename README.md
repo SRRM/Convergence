@@ -8,7 +8,7 @@ At the beginning of each game, our AI has selected at random a starting word out
 The key is to try to meet halfway by guessing words that have some semantic relationship to the words you and the AI have previously chosen. For example, if you choose 'lava' as your first word, and the AI selects 'water', then 'liquid', 'caldera', and 'steam' might be good guesses. You get a maximum of 20 chances to converge on the same word.
 
 ## Built With
-A lot of awesome stuff, including:
+
 - [word2vec](https://www.npmjs.com/package/word2vec)
 - [wordnet](https://www.npmjs.com/package/wordnet)
 - [react-d3](https://www.npmjs.com/package/react-d3)
