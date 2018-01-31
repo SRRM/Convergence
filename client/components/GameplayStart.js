@@ -1,32 +1,41 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
+import history from '../history'
+import store from '../store'
+import {setupGameThunkCreator} from '../reducer'
 
-
+const handleClick = (evt) => {
+    evt.preventDefault()
+    const computerWord = store.getState().machineWords[0]
+    const personality = evt.target.personality.value
+    const userWord = evt.target.word.value
+    store.dispatch(setupGameThunkCreator(personality, userWord, computerWord))
+    history.push(`/gameplay`)
+}
 export const GameplayStart = () => {
     return (
         <div className="overlay" >
             <h2>Game Setup</h2>
            <span></span> 
-           <form>
+           <form
+            onSubmit={handleClick}
+           >
            <span>Personality:</span>
-               <textarea>
+               <textarea 
+                id="personality-textarea"
+                name="personality"
+                >
                    </textarea>
                    <span>First word:</span>
                <input
                 id="firstWord"
+                name="word"
                />
                <button
-                    type="button"
-                    onClick={()=>{
-                        submitHumanWordThunkCreator('word')
-                    }}
+                    type="submit"
                 >
                     SUBMIT 
                 </button>
-
-                <NavLink to="/gameplay">
-                    Gameplay
-                </NavLink>
                 
             </form>    
         </div>
