@@ -2,13 +2,14 @@ import React from 'react'
 import {NavLink} from 'react-router-dom'
 import history from '../history'
 import store from '../store'
-import {setupGameThunkCreator} from '../reducer'
+import {setupGameThunkCreator, storeHumanWordActionCreator} from '../reducer'
 
 const handleClick = (evt) => {
     evt.preventDefault()
-    const computerWord = store.getState().machineWords[0]
+    const computerWord = store.getState().machineWord
     const personality = evt.target.personality.value
     const userWord = evt.target.word.value
+    store.dispatch(storeHumanWordActionCreator(userWord))
     store.dispatch(setupGameThunkCreator(personality, userWord, computerWord))
     history.push(`/gameplay`)
 }
