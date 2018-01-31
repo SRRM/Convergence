@@ -23,20 +23,21 @@ module.exports = function (router, shared) {
     try {
       //  req.body: { personality = '', userWord, computerWord }
       const {personality, userWord, computerWord} = req.body
-
+      
       let cloud = shared.mostSimilar(`${personality} ${userWord} ${userWord} ${computerWord}`, 20) //[{word: '', dist: number}]
-
-      let machineOneGuess = cloud.filter(x => [userWord, computerWord].indexOf(x.word) === -1)[0].word
-
+      
+      let machineFirstGuess = cloud.filter(x => [userWord, computerWord].indexOf(x.word) === -1)[0].word
+      
       let cosineDistance = 1 - shared.similarity(userWord, computerWord)
 
       //!!!!!!!!!!!!!!!await machineFirstGuess, cosineDistance
       const game = await Game.create({
         personality: req.body.personality
       })
+      console.log(req.body)
       const firstRound = await Round.create({
         cosineDistance: cosineDistance,
-        gameId: game.randId,
+        gameId: game.id,
         machineOneWord: req.body.computerWord,
         roundNum: 0,
         userWord: req.body.userWord,
@@ -59,23 +60,24 @@ module.exports = function (router, shared) {
       const { userWord, computerWord } = req.body
 
       const game = await Game.findOne({
-        where: { randId: req.params.gameId },
-        inlude: [{model: round}]
+        where: { id: req.params.gameId },
+        inlude: [{all: true}]
       })
-
-      const rounds = Round.findAll({ where: { gameId: game.randId } })
-
+      
+      const rounds = await Round.findAll({ where: { gameId: game.id } })
+      
       const userHistory = rounds.map(x => x.userWord)
+      
       const computerHistory = rounds.map(x => x.machineOneWord)
 
       const personality = game.personality
 
       const cosineDistance = 1 - shared.similarity(userWord, computerWord)
-
-      let cloud = shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 20)
+      
+      let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 20)
 
       let machineOneGuess = cloud.filter(x => [userWord, computerWord, ...userHistory, ...computerHistory].indexOf(x.word) === -1)[0].word
-
+      
       //!!!!!!!!!!!!!!!! await machineOneWord, cosineDistance
       const newRound = await Round.create({
         cosineDistance: cosineDistance,
@@ -84,11 +86,11 @@ module.exports = function (router, shared) {
         roundNum: req.body.roundNum,
         userWord: req.body.userWord,
       })
-      res.json(
+      res.json({
         newRound,
         machineOneGuess,
         cosineDistance
-      )
+    })
     }
     catch (error) {
       next(error)

@@ -27,18 +27,18 @@ const Round = db.define('round', {
   cosineDistance: {
     type: Sequelize.FLOAT
   },
-  commonWords: {
-    type: Sequelize.VIRTUAL,
-    get() {
-      let commonArray;
-      if (this.userWord){
-        commonArray = this.userWords.filter((word) => this.machineOneWords.includes(word))
-      } else {
-        commonArray = this.machineOneWords.filter((word) => this.machineTwoWords.includes(word))
-      }
-      return [...new Set(commonArray)].join(' ')
-    }
-  }
+  // commonWords: {
+  //   type: Sequelize.VIRTUAL,
+  //   get() {
+  //     let commonArray;
+  //     if (this.userWord){
+  //       commonArray = this.userWords.filter((word) => this.machineOneWords.includes(word))
+  //     } else {
+  //       commonArray = this.machineOneWords.filter((word) => this.machineTwoWords.includes(word))
+  //     }
+  //     return [...new Set(commonArray)].join(' ')
+  //   }
+  // }
 })
 
 module.exports = Round
