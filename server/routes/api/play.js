@@ -24,9 +24,15 @@ module.exports = function (router, shared) {
       //  req.body: { personality = '', userWord, computerWord }
       const {personality, userWord, computerWord} = req.body
 
-      let cloud = shared.mostSimilar(`${personality} ${userWord} ${userWord} ${computerWord}`, 20) //[{word: '', dist: number}]
+      console.log('personality: ', personality)
+      console.log('userWord: ', userWord)
+      console.log('computerWord: ', computerWord)
 
-      let machineOneGuess = cloud.filter(x => [userWord, computerWord].indexOf(x.word) === -1)[0].word
+      console.log('shared in play api: ', shared)
+
+      let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 10) //[{word: '', dist: number}]
+
+      let machineFirstGuess = cloud.filter(x => [userWord, computerWord].indexOf(x.word) === -1)[0].word
 
       let cosineDistance = 1 - shared.similarity(userWord, computerWord)
 
