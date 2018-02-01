@@ -4,7 +4,7 @@ const path = require('path')
 
 // let model
 console.time('loader')
-const getModel = async () => await new Promise(async (resolve, reject) => {
+const getModel = async () => new Promise(async (resolve, reject) => {
    w2v.loadModel(path.join(__dirname, '../../trainingText/vectors.txt'), (err, data) => {
      console.timeEnd('loader')
     if (err !== null) return reject(err);

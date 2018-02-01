@@ -26,7 +26,7 @@ const Round = db.define('round', {
   },
   cosineDistance: {
     type: Sequelize.FLOAT
-  },
+  }
   // commonWords: {
   //   type: Sequelize.VIRTUAL,
   //   get() {
