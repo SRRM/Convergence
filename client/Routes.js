@@ -68,10 +68,12 @@ class Routes extends Component {
             params={{
               particles: {
                 line_linked: {
+                  opacity: 0.8,
+                  width: 2,
                   shadow: {
                     enable: true,
                     color: '#F97CA0',
-                    blur: 5
+                    blur: 7
                   }
                 },
                 shape: {

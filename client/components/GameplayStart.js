@@ -17,28 +17,37 @@ export const GameplayStart = () => {
     return (
         <div className="overlay" >
             <h2>Game Setup</h2>
-           <span></span> 
-           <form
-            onSubmit={handleClick}
-           >
-           <span>Personality:</span>
-               <textarea 
-                id="personality-textarea"
-                name="personality"
+            <div className="game-setup"> 
+                <form
+                    id="game-setup-form"
+                    className="ui form"
+                    onSubmit={handleClick}
                 >
-                   </textarea>
-                   <span>First word:</span>
-               <input
-                id="firstWord"
-                name="word"
-               />
-               <button
-                    type="submit"
-                >
-                    SUBMIT 
-                </button>
-                
-            </form>    
+                    <textarea
+                        placeholder="Enter a personality for the AI"
+                        id="personality-textarea"
+                        name="personality"
+                        >
+                        </textarea>
+                    <div id="first-word-form-subsection" className="ui grid">
+                        <div className="eight wide column">
+                            <input
+                                id="firstWord"
+                                name="word"
+                                placeholder="Enter your starting word"
+                            />
+                        </div>
+                        <div className="eight wide column">
+                            <button
+                                type="submit"
+                                className="fluid ui button"
+                            >
+                                BEGIN 
+                            </button>
+                        </div>
+                    </div>
+                </form>  
+            </div>  
         </div>
     )
 }

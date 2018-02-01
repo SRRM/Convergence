@@ -13,6 +13,7 @@ const handleClick = () => {
 export const LandingPage = () => {
   return (
       <div className="overlay">
+      <div id="landing-page-info">
         <h1 id="title">Convergence</h1>
         <h2>
           A Game of Cooperative Word Alchemy
@@ -20,13 +21,15 @@ export const LandingPage = () => {
         <NavLink to="/gameplay/summary"> <h2>Gameplay Summary[Dev]</h2></NavLink>
         
           <button
-            className="center-action-button"
+          id="center-action-button"
+            className="ui button"
             onClick={handleClick}
           >
-              Play
+              START
           </button>
         
         <NavLink to="/wordgraph"> <h2> Word Graph </h2></NavLink>
+        </div>
       </div>
   )
 }

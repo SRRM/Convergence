@@ -13,12 +13,17 @@ const slides = [
         the same word as the AI in subsequent rounds. 
         How might you accomplish such a challenging task?
       </p>
-      <NavLink to="/gameplay/start">
-        <button>Skip</button>
-      </NavLink>
-      <NavLink to="/tutorial/1">
-        <button>next</button>
-      </NavLink>
+      <div className="tutorial-links">
+        <NavLink to="/" >
+          <i className="chevron circle left icon"></i>
+        </NavLink>
+        <NavLink to="/gameplay/start" className="skip-link">
+          <span >SKIP</span>
+        </NavLink>
+        <NavLink to="/tutorial/1" className="right-arrow">
+          <i className="chevron circle right icon" ></i>
+        </NavLink>
+      </div>
     </div>
   </div>,
   <div className="overlay">
@@ -28,12 +33,17 @@ const slides = [
         to the words you and the AI have previously chosen. For example, if you choose 'lava' as 
         your first word, and the AI selects 'water', then 'liquid', 'caldera', and 'steam' might be 
         good guesses. You get a maximum of 20 chances to converge on the same word.</p>
-      <NavLink to="/gameplay/start">
-          <button>skip</button>
-      </NavLink>
-      <NavLink to="/tutorial/2">
-          <button>next</button>
-      </NavLink>
+        <div className="tutorial-links">
+        <NavLink to="/tutorial/0" >
+          <i className="chevron circle left icon"></i>
+        </NavLink>
+        <NavLink to="/gameplay/start" className="skip-link">
+          <span >SKIP</span>
+        </NavLink>
+        <NavLink to="/tutorial/2" className="right-arrow">
+          <i className="chevron circle right icon" ></i>
+        </NavLink>
+      </div>
     </div>
   </div>,
   <div className="overlay">
@@ -45,9 +55,17 @@ const slides = [
       and have fun. Best of luck!
     </p>
     
-    <NavLink to="/gameplay/start">
-        <button>Finish</button>
-    </NavLink>
+    <div className="tutorial-links">
+        <NavLink to="/tutorial/1" >
+          <i className="chevron circle left icon"></i>
+        </NavLink>
+        <NavLink to="/gameplay/start" className="skip-link">
+          <span ></span>
+        </NavLink>
+        <NavLink to="/gameplay/start" className="right-arrow">
+          <i className="chevron circle right icon" ></i>
+        </NavLink>
+      </div>
   </div>
  </div>
 ]
