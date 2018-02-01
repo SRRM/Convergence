@@ -24,7 +24,7 @@ const handleClick = evt => {
 const Gameplay = (props) => {
     return (     
         <div className="overlay" >
-            <h2>Round #:<span>{props.roundNumber}</span></h2>
+            <h2>Round <span>{props.roundNumber}</span>/20</h2>
             
            <h2>Computer chose: <span>{props.machineWord}</span></h2>
            
