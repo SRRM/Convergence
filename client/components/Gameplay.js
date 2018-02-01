@@ -30,17 +30,29 @@ const Gameplay = (props) => {
            
            <h2>You chose: <span>{props.humanWord}</span></h2>
            
-           <form onSubmit={handleClick}>
+           <div className="ui grid">
+           <form
+           id="user-guess-form"
+           onSubmit={handleClick}
+           className="ui form grid eight wide column"
+           >
+           <div className="ten wide column">
                <input
                 id="daInput"
                 name="userGuess"
+                placeholder="Enter your next guess"
                />
+            </div>
+            <div className="six wide column">
                <button
+                className="fluid ui button"
                     type="submit"
                 >
                     SUBMIT 
                 </button>
-            </form>    
+            </div>
+            </form>
+             </div>
         </div>
     )
 }
