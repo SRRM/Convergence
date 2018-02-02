@@ -2,6 +2,12 @@
 const { Game, Round } = require('../../db/models')
 const commonWords = require('../../commonWords')
 
+const pluralVersions = word => [pl.singular(word), pl.plural(word)]
+const casedArray = wordArray => [...wordArray.map(word => word[0].toLowerCase() + word.slice(1)), ...wordArray.map(word => word[0].toUpperCase() + word.slice(1))]
+
+
+const pl = require('pluralize')
+
 function maybeValues(vector) {
   // avoids type errors
 
@@ -33,6 +39,8 @@ module.exports = function (router, shared) {
 
   console.log('api play visited')
 
+
+
   // const router = require('express').Router()
   router.get('/api/play', async (req, res, next) => {
     try {
@@ -47,7 +55,12 @@ module.exports = function (router, shared) {
   router.post('/api/play/start', async (req, res, next) => {
     try {
       //  req.body: { personality = '', userWord, computerWord }
-      const { personality, userWord, computerWord } = req.body
+      let { personality, userWord, computerWord } = req.body
+
+      userWord = userWord.toLowerCase()
+
+      const pluralInputs = [...pluralVersions(userWord), ...pluralVersions(computerWord)]
+      const casings = casedArray(pluralInputs)
 
       // console.log('personality: ', personality)
       // console.log('userWord: ', userWord)
@@ -65,7 +78,7 @@ module.exports = function (router, shared) {
 
       // let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 10) //[{word: '', dist: number}]
 
-      let machineFirstGuess = cloud.filter(x => [userWord, computerWord].indexOf(x.word) === -1)[0].word
+      let machineFirstGuess = cloud.filter(x => casings.indexOf(x.word.toLowerCase()) === -1)[0].word.toLowerCase()
 
       // =======
 
@@ -113,6 +126,8 @@ module.exports = function (router, shared) {
 
       const { userWord, computerWord } = req.body
 
+      const pluralInputs = [...pluralVersions(userWord), ...pluralVersions(computerWord)]
+
       console.log('req.body: ', req.body)
 
       const game = await Game.findOne({
@@ -149,7 +164,7 @@ module.exports = function (router, shared) {
       //       let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 20)
       // >>>>>>> master
 
-      let machineOneGuess = cloud.filter(x => [userWord, computerWord, ...userHistory, ...computerHistory].indexOf(x.word) === -1)[0].word
+      let machineOneGuess = cloud.filter(x => [...pluralInputs, ...userHistory, ...computerHistory].indexOf(x.word) === -1)[0].word
 
       //!!!!!!!!!!!!!!!! await machineOneWord, cosineDistance
       const newRound = await Round.create({
