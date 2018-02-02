@@ -35,11 +35,11 @@ module.exports = function (router, shared) {
       let machineFirstGuess = cloud.filter(x => [userWord, computerWord].indexOf(x.word) === -1)[0].word
 
 // =======
-      
+
 //       let cloud = shared.mostSimilar(`${personality} ${userWord} ${userWord} ${computerWord}`, 20) //[{word: '', dist: number}]
-      
+
 //       let machineFirstGuess = cloud.filter(x => [userWord, computerWord].indexOf(x.word) === -1)[0].word
-      
+
 // >>>>>>> master
       let cosineDistance = 1 - shared.similarity(userWord, computerWord)
 
@@ -76,21 +76,24 @@ module.exports = function (router, shared) {
         where: { id: req.params.gameId },
         inlude: [{all: true}]
       })
-      
+
       const rounds = await Round.findAll({ where: { gameId: game.id } })
-      
+
       const userHistory = rounds.map(x => x.userWord)
-      
+
       const computerHistory = rounds.map(x => x.machineOneWord)
 
       const personality = game.personality
 
-      const cosineDistance = 1 - shared.similarity(userWord, computerWord)
-      
+      // Rescaling for visualization: (similarity + 1)/2 gives the similarity as an element of [0,1] rather than [-1,1]
+      const similarity = shared.similarity(userWord, computerWord)
+      const adjustedSimilarity = (similarity + 1) / 2
+      const cosineDistance = 1 - adjustedSimilarity
+
       let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 20)
 
       let machineOneGuess = cloud.filter(x => [userWord, computerWord, ...userHistory, ...computerHistory].indexOf(x.word) === -1)[0].word
-      
+
       //!!!!!!!!!!!!!!!! await machineOneWord, cosineDistance
       const newRound = await Round.create({
         cosineDistance: cosineDistance,
