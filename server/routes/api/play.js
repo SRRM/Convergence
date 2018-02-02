@@ -2,6 +2,31 @@
 const { Game, Round } = require('../../db/models')
 const commonWords = require('../../commonWords')
 
+function maybeValues(vector) {
+  // avoids type errors
+
+  if (vector.values) {
+    return vector.values
+  } else if (Array.isArray(vector)) {
+    return vector
+  } else {
+    return new Array(300).fill(0)
+  }
+}
+
+function vectorAddition(vectorOne, vectorTwo) {
+  // returns vector only as an array of values
+
+  let v1 = maybeValues(vectorOne)
+  let v2 = maybeValues(vectorTwo)
+
+  return v1.map((x, i) => x + v2[i])
+}
+
+function scalarMult(vector, scalar) {
+  return maybeValues(vector).map(x => x * scalar)
+}
+
 // module.exports = router
 
 module.exports = function (router, shared) {
@@ -22,7 +47,7 @@ module.exports = function (router, shared) {
   router.post('/api/play/start', async (req, res, next) => {
     try {
       //  req.body: { personality = '', userWord, computerWord }
-      const {personality, userWord, computerWord} = req.body
+      const { personality, userWord, computerWord } = req.body
 
       console.log('personality: ', personality)
       console.log('userWord: ', userWord)
@@ -30,7 +55,15 @@ module.exports = function (router, shared) {
 
       console.log('shared in play api: ', shared)
 
-      let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 10) //[{word: '', dist: number}]
+      let machineVector = await shared.getVector(computerWord)
+
+      let userVector = await shared.getVector(userWord)
+
+      let netVector = vectorAddition(scalarMult(computerWord, 0.6), scalarMult(userWord, 0.4))
+
+      let cloud = await shared.getNearestWords(netVector, 20) // [{word: '', dist: number}]
+
+      // let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 10) //[{word: '', dist: number}]
 
       let machineFirstGuess = cloud.filter(x => [userWord, computerWord].indexOf(x.word) === -1)[0].word
 
@@ -73,8 +106,13 @@ module.exports = function (router, shared) {
       const { userWord, computerWord } = req.body
 
       const game = await Game.findOne({
+// <<<<<<< apiAi
+//         where: { randId: req.params.gameId },
+//         inlude: [{ model: round }]
+// =======
         where: { id: req.params.gameId },
         inlude: [{all: true}]
+// >>>>>>> master
       })
       
       const rounds = await Round.findAll({ where: { gameId: game.id } })
@@ -86,8 +124,15 @@ module.exports = function (router, shared) {
       const personality = game.personality
 
       const cosineDistance = 1 - shared.similarity(userWord, computerWord)
+// <<<<<<< apiAi
+
+      let netVector = vectorAddition(scalarMult(computerWord, 0.6), scalarMult(userWord, 0.4))
+
+      let cloud = shared.getNearestWords(netVector, 20)
+// =======
       
-      let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 20)
+//       let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 20)
+// >>>>>>> master
 
       let machineOneGuess = cloud.filter(x => [userWord, computerWord, ...userHistory, ...computerHistory].indexOf(x.word) === -1)[0].word
       
