@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Convergence</title>
     <script src="bundle.js" defer></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
 
     <style>
@@ -19,10 +20,6 @@
       text-decoration: none;
     }
 
-    h1{
-      font-size: 4rem;
-    }
-
     h1, h2 {
       text-align: center;
       font-family: 'Josefin Sans', sans-serif;
@@ -30,7 +27,14 @@
     }
 
     h1#title {
-      color: white;
+      color: rgb(84, 79, 90);
+      margin: 2rem;
+      font-size: 10rem;
+    }
+
+    h2{
+      font-size: 2.5rem;
+      color:rgb(141, 132, 142);
     }
 
     div.overlay {
@@ -45,22 +49,118 @@
 
     }
 
-    .center-action-button {
-      border-radius: 20px;
+    #center-action-button {
+      background-color: rgb(141, 132, 142);
       color: white;
-      background-color: rgb(27, 27, 27);
       display: block;
-      margin: auto;
+      margin: 2rem auto;
       width: 200px;
-      height: 32px;
       cursor: pointer;
       border: none;
-      font-size: 1rem;
+      text-align:center;
+      font-size: 2rem;
     }
 
-    .center-action-button:hover {
+    #landing-page-info{
+      height: 300px;
+      width: 100%;
+      margin: auto;
+      position: relative;
+      top: 40%;
+      transform: translateY(-50%)
+    }
+
+    #center-action-button:hover {
+      background-color: rgb(84, 79, 90);
+      color: rgb(248, 227, 187);
+    }
+
+    #user-guess-form{
+      display: block;
+      margin: auto;
+    }
+
+    #user-guess-form button, #first-word-form-subsection button {
+      background-color: rgb(141, 132, 142);
+      color: white;
+    }
+
+    #user-guess-form button:hover, #first-word-form-subsection button:hover {
+      background-color: rgb(84, 79, 90);
+      color: rgb(248, 227, 187);
+    }
+
+    .tutorial-slide {
+      background-color: rgba(34, 26, 26, 0.8);
+      border-radius: 20px;
+      padding: 2rem;
+      color: white;
+      height: 300px;
+      width: 700px;
+      margin: auto;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%)
+    }
+
+    .tutorial-slide h2{
       color: orange;
     }
+
+    .tutorial-links {
+      display: flex;
+      padding-top: 1rem;
+    }
+
+    .tutorial-links a {
+      flex: 1;
+    }
+
+    .skip-link {
+      font-size: 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .skip-link:hover {
+      color: rgb(248, 227, 187);
+    }
+
+    .right-arrow i {
+      float: right;
+    }
+
+    i.icon {
+      font-size: 3rem;
+      color: white;
+    }
+
+    i.icon:hover {
+      color: rgb(248, 227, 187);
+    }
+
+    div.game-setup{
+      background-color: rgba(34, 26, 26, 0.8);
+      border-radius: 20px;
+      padding: 2rem;
+      color: white;
+      height: 300px;
+      width: 700px;
+      margin: auto;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%)
+    }
+
+    .game-setup-form{
+      padding: 1rem;
+    }
+
+    #first-word-form-subsection {
+      padding-top: 1rem;
+    }
+
+    
   </style>
 </head>
 <body>
