@@ -3,6 +3,7 @@ const { Game, Round } = require('../../db/models')
 const commonWords = require('../../commonWords')
 
 const pluralVersions = word => [pl.singular(word), pl.plural(word)]
+const pluralArray = arr => [...arr.map(word => pl.singular(word)), ...arr.map(word => pl.plural(word))]
 const casedArray = wordArray => [...wordArray.map(word => word[0].toLowerCase() + word.slice(1)), ...wordArray.map(word => word[0].toUpperCase() + word.slice(1))]
 
 
@@ -68,7 +69,12 @@ module.exports = function (router, shared) {
 
       // console.log('shared in play api: ', shared)
 
+      console.time('computerWord')
+
       let machineVector = await shared.getVector(computerWord)
+
+      console.timeEnd('computerWord')
+      console.log('got computerWord!')
 
       let userVector = await shared.getVector(userWord)
 
@@ -102,12 +108,12 @@ module.exports = function (router, shared) {
         userWord: req.body.userWord,
       })
 
-      console.log('fake json: ', {
-        game,
-        firstRound,
-        machineFirstGuess,
-        cosineDistance
-      })
+      // console.log('fake json: ', {
+      //   game,
+      //   firstRound,
+      //   machineFirstGuess,
+      //   cosineDistance
+      // })
 
       res.json({
         game,
@@ -126,7 +132,7 @@ module.exports = function (router, shared) {
 
       const { userWord, computerWord } = req.body
 
-      const pluralInputs = [...pluralVersions(userWord), ...pluralVersions(computerWord)]
+      // const pluralInputs = [...pluralVersions(userWord), ...pluralVersions(computerWord)]
 
       console.log('req.body: ', req.body)
 
@@ -140,11 +146,14 @@ module.exports = function (router, shared) {
         // >>>>>>> master
       })
 
+
       const rounds = await Round.findAll({ where: { gameId: game.id } })
 
       const userHistory = rounds.map(x => x.userWord)
 
       const computerHistory = rounds.map(x => x.machineOneWord)
+
+      const casings = casedArray(pluralArray([computerWord, userWord, ...userHistory, ...computerHistory]))
 
       const personality = game.personality
 
@@ -156,7 +165,7 @@ module.exports = function (router, shared) {
 
       // <<<<<<< apiAi
 
-      let netVector = vectorAddition(scalarMult(computerVector, 0.6), scalarMult(userVector, 0.4))
+      let netVector = vectorAddition(scalarMult(computerVector, 0.5), scalarMult(userVector, 0.5))
 
       let cloud = await shared.getNearestWords(netVector, 20)
       // =======
@@ -164,7 +173,7 @@ module.exports = function (router, shared) {
       //       let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 20)
       // >>>>>>> master
 
-      let machineOneGuess = cloud.filter(x => [...pluralInputs, ...userHistory, ...computerHistory].indexOf(x.word) === -1)[0].word
+      let machineOneGuess = cloud.filter(x => casings.indexOf(x.word) === -1)[0].word
 
       //!!!!!!!!!!!!!!!! await machineOneWord, cosineDistance
       const newRound = await Round.create({
