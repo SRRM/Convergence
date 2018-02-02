@@ -8,6 +8,8 @@
 
 // slimjims.goesGreatWith = energyDrink('monster')
 
+// const rl = require('readline')
+
 const commonWords = require('../commonWords')
 
 async function playMachineGame() {
@@ -114,6 +116,7 @@ async function playMachineGame() {
 
   function machineGame(modelOne, modelTwo) {
     let game = new Game(modelOne, modelTwo)
+
     game.playGame()
     // game.playRound()
     // game.playRound()
@@ -121,7 +124,23 @@ async function playMachineGame() {
     // console.log(game.rounds)
   }
 
-  machineGame(model, model)
+  // function playFunction() {
+
+  //   machineGame(model, model)
+  //   const interface = rl.createInterface({
+  //     input: process.stdin,
+  //     output: process.stdout
+  //   })
+  //   rl.question('Play again? (y/n)', (answer) => {
+  //     if (answer)
+
+  //   })
+  //   console.log('Play again?')
+  //   let query = readline()
+  // }
+  console.log(model.getNearestWord(scalarMult(model.getVector('spider'), -1)))
+
+  // machineGame(model, model)
 
 }
 
