@@ -165,7 +165,7 @@ module.exports = function (router, shared) {
 
       // <<<<<<< apiAi
 
-      let netVector = vectorAddition(scalarMult(computerVector, 0.5), scalarMult(userVector, 0.5))
+      let netVector = vectorAddition(scalarMult(computerVector, 0.4), scalarMult(userVector, 0.6))
 
       let cloud = await shared.getNearestWords(netVector, 20)
       // =======
