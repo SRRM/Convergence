@@ -129,6 +129,67 @@ module.exports = function (router, shared) {
     }
   })
 
+  router.post('/api/play/:gameId/win', async (req, res, next) => {
+    try {
+      const game = await Game.update(
+        { status: 'Converged' },
+        { where: { id: req.params.gameId } }
+      )
+
+      const newRound = await Round.create({
+        cosineDistance: 0,
+        gameId: req.params.gameId,
+        machineOneWord: req.body.userWord,
+        roundNum: req.body.roundNum,
+        userWord: req.body.userWord,
+      })
+
+      res.json({
+        game,
+        newRound
+      })
+
+    } catch (error) {
+      next(error)
+    }
+  })
+
+  router.post('/api/play/:gameId/lose', async (req, res, next) => {
+    try {
+
+      const { userWord, computerWord } = req.body
+
+      const game = await Game.update({
+        status: 'Failed'
+      },
+        {
+          where: {
+            id: req.params.gameId
+          }
+        })
+
+      let cosineDistance = 1 - shared.similarity(userWord, computerWord)
+
+      const newRound = await Round.create({
+        cosineDistance: cosineDistance,
+        gameId: req.params.gameId,
+        machineOneWord: req.body.computerWord,
+        roundNum: req.body.roundNum,
+        userWord: req.body.userWord,
+      })
+
+
+
+      res.json({
+        game,
+        newRound
+      })
+
+    } catch (error) {
+      next(error)
+    }
+  })
+
   router.post('/api/play/:gameId', async (req, res, next) => {
     try {
 

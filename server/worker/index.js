@@ -15,7 +15,7 @@ module.exports = {
         app = express()
         routes(app, shared)
 
-        db.sync({ force: true })
+        db.sync()
           .then(() => {
             console.log('db synced')
             server = app.listen(3000, () => {
