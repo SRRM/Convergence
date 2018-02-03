@@ -151,6 +151,38 @@ module.exports = function (router, shared) {
 
       let machineOneGuess = cloud.filter(x => [userWord, computerWord, ...userHistory, ...computerHistory].indexOf(x.word) === -1)[0].word
 
+      /*
+
+      possible with pluralize:
+
+      let guessObject = {
+        mainGuess: "dog",
+        allForms: ["dog", "dogs"]
+      }
+
+      need this for verbs
+
+      let guessObject = {
+        mainGuess: "created"
+        allForms: ["created", "creates", "create", "creating"]
+      }
+
+      possibly acceptable:
+
+      let guessObject = {
+        mainGuess: "dog",
+        allForms: ["dog", "dogs", "dogged", "dogging"]
+      }
+
+      let guessObject = {
+        mainGuess: "eat",
+        allForms: ["eat", "eats", "ate", "eating", "eaten"]
+      }
+
+
+
+      */
+
       //!!!!!!!!!!!!!!!! await machineOneWord, cosineDistance
       const newRound = await Round.create({
         cosineDistance: cosineDistance,
