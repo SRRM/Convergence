@@ -16,7 +16,7 @@ const handleClick = (evt) => {
 export const GameplayStart = () => {
     return (
         <div className="overlay" >
-            <h2>Game Setup</h2>
+            <h2 className="page-title">Game Setup</h2>
             <div className="game-setup"> 
                 <form
                     id="game-setup-form"

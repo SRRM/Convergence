@@ -47,6 +47,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "chalk": "^2.3.0",
+    "compromise": "^11.2.3",
     "inquirer": "^5.0.1",
     "pg": "^6.4.1",
     "pluralize": "^7.0.0",
