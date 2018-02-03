@@ -2,9 +2,11 @@
 const { Game, Round } = require('../../db/models')
 const commonWords = require('../../commonWords')
 
-const pluralVersions = word => [pl.singular(word), pl.plural(word)]
-const pluralArray = arr => [...arr.map(word => pl.singular(word)), ...arr.map(word => pl.plural(word))]
-const casedArray = wordArray => [...wordArray.map(word => word[0].toLowerCase() + word.slice(1)), ...wordArray.map(word => word[0].toUpperCase() + word.slice(1))]
+const getVersions = require('../../getVersions')
+
+// const pluralVersions = word => [pl.singular(word), pl.plural(word)]
+// const pluralArray = arr => [...arr.map(word => pl.singular(word)), ...arr.map(word => pl.plural(word))]
+// const casedArray = wordArray => [...wordArray.map(word => word[0].toLowerCase() + word.slice(1)), ...wordArray.map(word => word[0].toUpperCase() + word.slice(1))]
 
 
 const pl = require('pluralize')
@@ -60,8 +62,8 @@ module.exports = function (router, shared) {
 
       userWord = userWord.toLowerCase()
 
-      const pluralInputs = [...pluralVersions(userWord), ...pluralVersions(computerWord)]
-      const casings = casedArray(pluralInputs)
+      const pluralInputs = [...getVersions(userWord), ...getVersions(computerWord)]
+      // const casings = casedArray(pluralInputs)
 
       // console.log('personality: ', personality)
       // console.log('userWord: ', userWord)
@@ -84,7 +86,7 @@ module.exports = function (router, shared) {
 
       // let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 10) //[{word: '', dist: number}]
 
-      let machineFirstGuess = cloud.filter(x => casings.indexOf(x.word.toLowerCase()) === -1)[0].word.toLowerCase()
+      let machineFirstGuess = cloud.filter(x => pluralInputs.indexOf(x.word.toLowerCase()) === -1)[0].word.toLowerCase()
 
       // =======
 
@@ -130,7 +132,10 @@ module.exports = function (router, shared) {
   router.post('/api/play/:gameId', async (req, res, next) => {
     try {
 
-      const { userWord, computerWord } = req.body
+      let { userWord, computerWord } = req.body
+
+      userWord = userWord.toLowerCase()
+
 
       // const pluralInputs = [...pluralVersions(userWord), ...pluralVersions(computerWord)]
 
@@ -153,7 +158,9 @@ module.exports = function (router, shared) {
 
       const computerHistory = rounds.map(x => x.machineOneWord)
 
-      const casings = casedArray(pluralArray([computerWord, userWord, ...userHistory, ...computerHistory]))
+      // const casings = casedArray(pluralArray([computerWord, userWord, ...userHistory, ...computerHistory]))
+
+      const pluralInputs = [...getVersions(computerWord), ...getVersions(userWord), ...userHistory, ...computerHistory]
 
       const personality = game.personality
 
@@ -173,7 +180,7 @@ module.exports = function (router, shared) {
       //       let cloud = await shared.mostSimilar(`${personality} ${userWord} ${computerWord}`, 20)
       // >>>>>>> master
 
-      let machineOneGuess = cloud.filter(x => casings.indexOf(x.word) === -1)[0].word
+      let machineOneGuess = cloud.filter(x => pluralInputs.indexOf(x.word) === -1)[0].word
 
       //!!!!!!!!!!!!!!!! await machineOneWord, cosineDistance
       const newRound = await Round.create({
