@@ -131,10 +131,16 @@ module.exports = function (router, shared) {
 
   router.post('/api/play/:gameId/win', async (req, res, next) => {
     try {
-      const game = await Game.update(
+      const updatedGame = await Game.update(
         { status: 'Converged' },
-        { where: { id: req.params.gameId } }
+        { where: { id: req.params.gameId }, returning: true, plain: true }
       )
+
+      const game = updatedGame[1]
+
+      console.log(game)
+
+      // const game = updatedGame[1][0]
 
       const newRound = await Round.create({
         cosineDistance: 0,
@@ -159,7 +165,7 @@ module.exports = function (router, shared) {
 
       const { userWord, computerWord } = req.body
 
-      const game = await Game.update({
+      const updatedGame = await Game.update({
         status: 'Failed'
       },
         {
@@ -167,6 +173,10 @@ module.exports = function (router, shared) {
             id: req.params.gameId
           }
         })
+
+
+
+      const game = updatedGame[1][0]
 
       let cosineDistance = 1 - shared.similarity(userWord, computerWord)
 

@@ -12,26 +12,26 @@ const handleClick = evt => {
     const gameId = store.getState().game.id
     const personality = store.getState().personality
     const roundNumber = store.getState().roundNumber
+    store.dispatch(storeHumanWordActionCreator(userGuess))
+    store.dispatch(storeMachineWordActionCreator(computerGuess))
     if (userGuess === computerGuess) {
         console.log('hooray!')
         // dispatch an action
         store.dispatch(winGameThunkCreator(gameId, userGuess, roundNumber))
         console.log('winning thunk dispatched!!!!')
-        // history.push('/gameplay/end')
+        history.push('/gameplay/end')
     } else if (roundNumber === 5) {
         // dispatch lose game thunk creator
         console.log('failure :(')
         store.dispatch(loseGameThunkCreator(gameId, userGuess, computerGuess, roundNumber))
         console.log('losing thunk dispatched!!!!!!')
-        // history.push('/gameplay/end')
+        history.push('/gameplay/end')
 
     }
     else {
         //send this stuff to server so that AI can come up with response
         //server also replies with the complete round object
         store.dispatch(incrementRoundActionCreator())
-        store.dispatch(storeHumanWordActionCreator(userGuess))
-        store.dispatch(storeMachineWordActionCreator(computerGuess))
         store.dispatch(postRoundThunkCreator(userGuess, computerGuess, gameId, personality, roundNumber))
     }
 }
