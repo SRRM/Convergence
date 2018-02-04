@@ -129,6 +129,77 @@ module.exports = function (router, shared) {
     }
   })
 
+  router.post('/api/play/:gameId/win', async (req, res, next) => {
+    try {
+      const updatedGame = await Game.update(
+        { status: 'Converged' },
+        { where: { id: req.params.gameId }, returning: true, plain: true }
+      )
+
+      const game = updatedGame[1]
+
+      console.log(game)
+
+      // const game = updatedGame[1][0]
+
+      const newRound = await Round.create({
+        cosineDistance: 0,
+        gameId: req.params.gameId,
+        machineOneWord: req.body.userWord,
+        roundNum: req.body.roundNum,
+        userWord: req.body.userWord,
+      })
+
+      res.json({
+        game,
+        newRound
+      })
+
+    } catch (error) {
+      next(error)
+    }
+  })
+
+  router.post('/api/play/:gameId/lose', async (req, res, next) => {
+    try {
+
+      const { userWord, computerWord } = req.body
+
+      const updatedGame = await Game.update({
+        status: 'Failed'
+      },
+        {
+          where: {
+            id: req.params.gameId
+          }
+        })
+
+
+
+      const game = updatedGame[1][0]
+
+      let cosineDistance = 1 - shared.similarity(userWord, computerWord)
+
+      const newRound = await Round.create({
+        cosineDistance: cosineDistance,
+        gameId: req.params.gameId,
+        machineOneWord: req.body.computerWord,
+        roundNum: req.body.roundNum,
+        userWord: req.body.userWord,
+      })
+
+
+
+      res.json({
+        game,
+        newRound
+      })
+
+    } catch (error) {
+      next(error)
+    }
+  })
+
   router.post('/api/play/:gameId', async (req, res, next) => {
     try {
 
@@ -181,6 +252,38 @@ module.exports = function (router, shared) {
       // >>>>>>> master
 
       let machineOneGuess = cloud.filter(x => pluralInputs.indexOf(x.word) === -1)[0].word
+
+      /*
+
+      possible with pluralize:
+
+      let guessObject = {
+        mainGuess: "dog",
+        allForms: ["dog", "dogs"]
+      }
+
+      need this for verbs
+
+      let guessObject = {
+        mainGuess: "created"
+        allForms: ["created", "creates", "create", "creating"]
+      }
+
+      possibly acceptable:
+
+      let guessObject = {
+        mainGuess: "dog",
+        allForms: ["dog", "dogs", "dogged", "dogging"]
+      }
+
+      let guessObject = {
+        mainGuess: "eat",
+        allForms: ["eat", "eats", "ate", "eating", "eaten"]
+      }
+
+
+
+      */
 
       //!!!!!!!!!!!!!!!! await machineOneWord, cosineDistance
       const newRound = await Round.create({

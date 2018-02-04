@@ -10,6 +10,7 @@ import { TutorialSlides } from './components/TutorialSlides'
 import Gameplay from './components/Gameplay'
 import {GameplayStart} from './components/GameplayStart'
 import {Background} from './components/Background'
+import GameplayEnd from './components/GameplayEnd'
 
 import store from './store'
 import axios from 'axios'
@@ -58,6 +59,11 @@ class Routes extends Component {
               component={Gameplay}
               exact
               path="/gameplay"
+            />
+
+            <Route
+              component={GameplayEnd}
+              exact path="/gameplay/end"
             />
 
             {/* Displays LandingPage as a fallback */}
