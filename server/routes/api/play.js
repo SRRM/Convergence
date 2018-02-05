@@ -32,13 +32,36 @@ function vectorAddition(vectorOne, vectorTwo) {
   return v1.map((x, i) => x + v2[i])
 }
 
+function addVectors(...vectors) {
+  if (vectors.length === 2) {
+    return vectorAddition(vectors[0], vectors[1])
+  } else if (vectors.length > 2) {
+    return addVectors(vectorAddition(vectors[0], vectors[1]), ...vectors.slice(2))
+  } else if (vectors.length === 1) {
+    return vectors[0]
+  }
+}
+
 function scalarMult(vector, scalar) {
   return maybeValues(vector).map(x => x * scalar)
+}
+
+function magnitude(vector) {
+  return Math.sqrt(maybeValues(vector).map(x => x * x).reduce((a, b) => a + b))
+}
+
+function unit(vector) {
+  const mag = magnitude(vector)
+  return vector.map(x => x/mag)
 }
 
 // module.exports = router
 
 module.exports = function (router, shared) {
+
+  function personalityArray(personality) {
+    return personality.match(/\w+/g).map(x => shared.getVector(x))
+  }
 
   console.log('api play visited')
 
@@ -60,6 +83,14 @@ module.exports = function (router, shared) {
       //  req.body: { personality = '', userWord, computerWord }
       let { personality, userWord, computerWord } = req.body
 
+      personality = personalityArray(personality)
+
+      personality.forEach(x => {
+        console.log(magnitude(maybeValues(x)))
+      })
+
+      console.log(addVectors([0, 1, 0], [0,1,0], [0,1,0]))
+
       userWord = userWord.toLowerCase()
 
       const pluralInputs = [...getVersions(userWord), ...getVersions(computerWord)]
@@ -80,7 +111,7 @@ module.exports = function (router, shared) {
 
       let userVector = await shared.getVector(userWord)
 
-      let netVector = vectorAddition(scalarMult(machineVector, 0.6), scalarMult(userVector, 0.4))
+      let netVector = addVectors(scalarMult(machineVector, 0.6), scalarMult(userVector, 0.4))
 
       let cloud = await shared.getNearestWords(netVector, 20) // [{word: '', dist: number}]
 
