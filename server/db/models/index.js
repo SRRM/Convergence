@@ -4,8 +4,8 @@ const Word = require('./word')
 
 Game.hasMany(Round)
 Round.belongsTo(Game)
-Game.hasMany(Word)
 Round.hasMany(Word)
+Word.belongsTo(Round)
 
 module.exports = {
   Game,
