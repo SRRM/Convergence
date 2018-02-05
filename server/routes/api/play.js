@@ -11,56 +11,80 @@ const getVersions = require('../../getVersions')
 
 const pl = require('pluralize')
 
-function maybeValues(vector) {
-  // avoids type errors
 
-  if (vector.values) {
-    return vector.values
-  } else if (Array.isArray(vector)) {
-    return vector
-  } else {
-    return new Array(300).fill(0)
-  }
-}
 
-function vectorAddition(vectorOne, vectorTwo) {
-  // returns vector only as an array of values
-
-  let v1 = maybeValues(vectorOne)
-  let v2 = maybeValues(vectorTwo)
-
-  return v1.map((x, i) => x + v2[i])
-}
-
-function addVectors(...vectors) {
-  if (vectors.length === 2) {
-    return vectorAddition(vectors[0], vectors[1])
-  } else if (vectors.length > 2) {
-    return addVectors(vectorAddition(vectors[0], vectors[1]), ...vectors.slice(2))
-  } else if (vectors.length === 1) {
-    return vectors[0]
-  }
-}
-
-function scalarMult(vector, scalar) {
-  return maybeValues(vector).map(x => x * scalar)
-}
-
-function magnitude(vector) {
-  return Math.sqrt(maybeValues(vector).map(x => x * x).reduce((a, b) => a + b))
-}
-
-function unit(vector) {
-  const mag = magnitude(vector)
-  return vector.map(x => x/mag)
-}
 
 // module.exports = router
 
 module.exports = function (router, shared) {
 
+  function maybeValues(vector) {
+    // avoids type errors
+
+    if (vector.values) {
+      return vector.values
+    } else if (Array.isArray(vector)) {
+      return vector
+    } else {
+      return new Array(+shared.size).fill(0)
+    }
+  }
+
+  function vectorAddition(vectorOne, vectorTwo) {
+    // returns vector only as an array of values
+
+    let v1 = maybeValues(vectorOne)
+    let v2 = maybeValues(vectorTwo)
+
+    return v1.map((x, i) => x + v2[i])
+  }
+
+  function addVectors(...vectors) {
+    console.log(vectors)
+    if (vectors.length === 2) {
+      return vectorAddition(vectors[0], vectors[1])
+    } else if (vectors.length > 2) {
+      return addVectors(vectorAddition(vectors[0], vectors[1]), ...vectors.slice(2))
+    } else if (vectors.length === 1) {
+      return vectors[0]
+    } else {
+      return new Array(+shared.size).fill(0)
+    }
+  }
+
+  function scalarMult(vector, scalar) {
+    return maybeValues(vector).map(x => x * scalar)
+  }
+
+  function magnitude(vector) {
+    return Math.sqrt(maybeValues(vector).map(x => x * x).reduce((a, b) => a + b))
+  }
+
+  function unit(vec) {
+    let vector = maybeValues(vec)
+    const mag = magnitude(vector)
+    if (mag === 0) {
+      return vector
+    }
+    return vector.map(x => x / mag)
+  }
+
   function personalityArray(personality) {
     return personality.match(/\w+/g).map(x => shared.getVector(x))
+  }
+
+  function aggregateStrategy(personality) {
+    return unit(addVectors(...personality))
+  }
+
+  function getDistance(vectorOne, vectorTwo) {
+    return 1 - (1 + shared.similarity(vectorOne, vectorTwo)) / 2
+  }
+
+  function isNear(personalityElement, userVector, computerVector) {
+    let userDistance = getDistance(personalityElement, userVector)
+    let computerDistance = getDistance(personalityElement, computerVector)
+    return userDistance < 0.3 || computerDistance < 0.3
   }
 
   console.log('api play visited')
@@ -83,13 +107,9 @@ module.exports = function (router, shared) {
       //  req.body: { personality = '', userWord, computerWord }
       let { personality, userWord, computerWord } = req.body
 
-      personality = personalityArray(personality)
+      // personality = personalityArray(personality)
 
-      personality.forEach(x => {
-        console.log(magnitude(maybeValues(x)))
-      })
-
-      console.log(addVectors([0, 1, 0], [0,1,0], [0,1,0]))
+      // console.log(addVectors([0, 1, 0], [0, 1, 0], [0, 1, 0]))
 
       userWord = userWord.toLowerCase()
 
@@ -126,7 +146,7 @@ module.exports = function (router, shared) {
       //       let machineFirstGuess = cloud.filter(x => [userWord, computerWord].indexOf(x.word) === -1)[0].word
 
       // >>>>>>> master
-      let cosineDistance = 1 - shared.similarity(userWord, computerWord)
+      let cosineDistance = getDistance(userWord, computerWord)
 
       //!!!!!!!!!!!!!!!await machineFirstGuess, cosineDistance
       const game = await Game.create({
@@ -209,7 +229,7 @@ module.exports = function (router, shared) {
 
       const game = updatedGame[1][0]
 
-      let cosineDistance = 1 - shared.similarity(userWord, computerWord)
+      const cosineDistance = getDistance(userWord, computerWord)
 
       const newRound = await Round.create({
         cosineDistance: cosineDistance,
@@ -237,6 +257,7 @@ module.exports = function (router, shared) {
       let { userWord, computerWord } = req.body
 
       userWord = userWord.toLowerCase()
+      computerWord = computerWord.toLowerCase()
 
 
       // const pluralInputs = [...pluralVersions(userWord), ...pluralVersions(computerWord)]
@@ -253,6 +274,24 @@ module.exports = function (router, shared) {
         // >>>>>>> master
       })
 
+      // isPrimed tells us whether a given word in the personality has been primed
+
+      const isPrimed = personalityWord => isNear(personalityWord, userWord, computerWord)
+
+      let personality = personalityArray(game.personality)
+
+      // we will be using the priming strategy instead of the aggregate strategy.
+
+      personality = personality.filter(elem => isPrimed(elem.word))
+
+      // although we are actually using an aggregate of the primed personality words
+      // so a combination of the two strategies
+      // (but mostly the priming strategy)
+      // (this should also make personality a zero vector if nothing is primed)
+      // so we will end up with either a zero vector
+      // or a unit vector in aggregate direction of primed personality words
+
+      personality = unit(addVectors(...personality))
 
       const rounds = await Round.findAll({ where: { gameId: game.id } })
 
@@ -264,9 +303,7 @@ module.exports = function (router, shared) {
 
       const pluralInputs = [...getVersions(computerWord), ...getVersions(userWord), ...userHistory, ...computerHistory]
 
-      const personality = game.personality
-
-      const cosineDistance = 1 - (1 + shared.similarity(userWord, computerWord)) / 2
+      const cosineDistance = getDistance(userWord, computerWord)
 
       let userVector = await shared.getVector(userWord)
 
@@ -274,7 +311,7 @@ module.exports = function (router, shared) {
 
       // <<<<<<< apiAi
 
-      let netVector = vectorAddition(scalarMult(computerVector, 0.4), scalarMult(userVector, 0.6))
+      let netVector = addVectors(scalarMult(computerVector, 0.4), scalarMult(userVector, 0.6))
 
       let cloud = await shared.getNearestWords(netVector, 20)
       // =======
