@@ -51,7 +51,7 @@ export const setupGameThunkCreator = (personality, userWord, computerWord) =>
       .catch(err => console.log(err))
 
 export const postRoundThunkCreator = (userWord, computerWord, gameId, personality, roundNumber) => dispatch => {
-
+  dispatch(toggleAwaitingReplyActionCreator())
   // might need to send round number?
   axios.post(`/api/play/${gameId}`, {
     userWord,
