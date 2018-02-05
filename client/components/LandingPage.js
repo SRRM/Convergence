@@ -18,7 +18,7 @@ export const LandingPage = () => {
         <h2>
           A Game of Cooperative Word Alchemy
         </h2>
-        <NavLink to="/gameplay/summary"> <h2>Gameplay Summary[Dev]</h2></NavLink>
+        
         
           <button
           id="center-action-button"
@@ -27,8 +27,6 @@ export const LandingPage = () => {
           >
               START
           </button>
-        
-        <NavLink to="/wordgraph"> <h2> Word Graph </h2></NavLink>
         </div>
       </div>
   )

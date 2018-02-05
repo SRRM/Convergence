@@ -64,39 +64,60 @@ class Gameplay extends Component {
         const props = this.props
         return (
             <div className="overlay" >
-                <h2>Round <span>{props.roundNumber}</span>/20</h2>
+                <div id="gameplay-content">
+                    <h2>Round <span>{props.roundNumber}</span>/20</h2>
 
-                <h2>Computer chose: <span>{props.machineWord}</span></h2>
+                    <h2>Computer chose: <span>{props.machineWord}</span></h2>
 
-                <h2>You chose: <span>{props.humanWord}</span></h2>
+                    <h2>You chose: <span>{props.humanWord}</span></h2>
 
-                <div className="ui grid">
-                    <form
-                        id="user-guess-form"
-                        onSubmit={this.handleClick}
-                        className="ui form grid eight wide column"
-                    >
-                        <div className="ten wide column">
-                            <input
-                                id="daInput"
-                                name="userGuess"
-                                placeholder="Enter your next guess"
-                                onChange={this.handleChange}
-                                value={this.state.inputValue}
-                            />
-                        </div>
-                        <div className="six wide column">
-                            <button
-                                id="user-guess-form-button"
-                                className="fluid ui button"
-                                type="submit"
-                                disabled = {!this.state.inputValue.length || this.props.awaitingReply}
-                            >
-                                SUBMIT
-                    </button>
-                        </div>
-                    </form>
+                    <div className="ui grid">
+                        <form
+                            id="user-guess-form"
+                            onSubmit={this.handleClick}
+                            className="ui form grid eight wide column"
+                        >
+                            <div className="ten wide column">
+                                <input
+                                    id="daInput"
+                                    name="userGuess"
+                                    placeholder="Enter your next guess"
+                                    onChange={this.handleChange}
+                                    value={this.state.inputValue}
+                                />
+                            </div>
+                            <div className="six wide column">
+                                <button
+                                    id="user-guess-form-button"
+                                    className="fluid ui button"
+                                    type="submit"
+                                    disabled = {!this.state.inputValue.length || this.props.awaitingReply}
+                                >
+                                    SUBMIT
+                        </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+                { this.props.error &&
+                    <div id="error-component">
+                    <form   
+                        className="ui warning form"
+                    >
+                        <div className="ui warning message">
+                            <div className="content">
+                                <div className="header">
+                                Error:
+                                </div>
+                                <p>
+                                    {this.props.error}
+                                </p>
+                            </div>
+                                
+                        </div>
+                    </form> 
+                </div>
+                }
             </div>
         )
     }
@@ -106,6 +127,7 @@ const mapState = state => ({
     roundNumber: state.roundNumber,
     machineWord: state.machineWord,
     humanWord: state.humanWord,
-    awaitingReply: state.awaitingReply
+    awaitingReply: state.awaitingReply,
+    error: state.error
 })
 export default connect(mapState)(Gameplay)
