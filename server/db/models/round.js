@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Round = db.define('round', {
-  roundNum: {
+  roundNumber: {
     type: Sequelize.INTEGER,
   },
   userWord: {

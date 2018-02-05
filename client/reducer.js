@@ -50,20 +50,21 @@ export const setupGameThunkCreator = (personality, userWord, computerWord) =>
       })
       .catch(err => console.log(err))
 
-export const postRoundThunkCreator = (userWord, computerWord, gameId, personality, roundNum) => dispatch => {
-  dispatch(toggleAwaitingReplyActionCreator())
+export const postRoundThunkCreator = (userWord, computerWord, gameId, personality, roundNumber) => dispatch => {
+
   // might need to send round number?
   axios.post(`/api/play/${gameId}`, {
     userWord,
     computerWord,
     gameId,
     personality,
-    roundNum
+    roundNumber
   })
     .then(res => res.data)
     .then(result => {
       dispatch(addRoundActionCreator(result.newRound))
       dispatch(updateHiddenGuessActionCreator(result.machineOneGuess))
+
       dispatch(toggleAwaitingReplyActionCreator())
     })
     .catch(() => {
@@ -71,12 +72,12 @@ export const postRoundThunkCreator = (userWord, computerWord, gameId, personalit
     })
 }
 
-export const winGameThunkCreator = (gameId, userWord, roundNum) => dispatch => {
+export const winGameThunkCreator = (gameId, userWord, roundNumber) => dispatch => {
   // store round, change state of game
   axios.post(`/api/play/${gameId}/win`, {
     userWord,
     gameId,
-    roundNum
+    roundNumber
   })
     .then(res => res.data)
     .then(result => {
@@ -87,13 +88,13 @@ export const winGameThunkCreator = (gameId, userWord, roundNum) => dispatch => {
     })
 }
 
-export const loseGameThunkCreator = (gameId, userWord, computerWord, roundNum) => dispatch => {
+export const loseGameThunkCreator = (gameId, userWord, computerWord, roundNumber) => dispatch => {
   // store round, change state of game
   axios.post(`/api/play/${gameId}/lose`, {
     userWord,
     computerWord,
     gameId,
-    roundNum
+    roundNumber
   })
     .then(res => res.data)
     .then(result => {
