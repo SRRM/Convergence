@@ -106,7 +106,7 @@ module.exports = function (router, shared) {
         cosineDistance: cosineDistance,
         gameId: game.id,
         machineOneWord: req.body.computerWord,
-        roundNum: 0,
+        roundNumber: 0,
         userWord: req.body.userWord,
       })
 
@@ -146,7 +146,7 @@ module.exports = function (router, shared) {
         cosineDistance: 0,
         gameId: req.params.gameId,
         machineOneWord: req.body.userWord,
-        roundNum: req.body.roundNum,
+        roundNumber: req.body.roundNumber,
         userWord: req.body.userWord,
       })
 
@@ -184,7 +184,7 @@ module.exports = function (router, shared) {
         cosineDistance: cosineDistance,
         gameId: req.params.gameId,
         machineOneWord: req.body.computerWord,
-        roundNum: req.body.roundNum,
+        roundNumber: req.body.roundNumber,
         userWord: req.body.userWord,
       })
 
@@ -290,7 +290,7 @@ module.exports = function (router, shared) {
         cosineDistance: cosineDistance,
         gameId: req.params.gameId,
         machineOneWord: req.body.computerWord,
-        roundNum: req.body.roundNum,
+        roundNumber: req.body.roundNumber,
         userWord: req.body.userWord,
       })
       await Word.create({
