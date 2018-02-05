@@ -9,6 +9,7 @@ const UPDATE_HIDDEN_GUESS = "UPDATE_HIDDEN_GUESS"
 const INCREMENT_ROUND = "INCREMENT_ROUND"
 const UPDATE_GAME_STATUS = "UPDATE_GAME_STATUS"
 const RESET_GAME = "RESET_GAME"
+const TOGGLE_AWAITING_REPLY = "TOGGLE_AWAITING_REPLY"
 
 
 //ACTION CREATORS
@@ -22,6 +23,7 @@ const updateHiddenGuessActionCreator = guess => ({ type: UPDATE_HIDDEN_GUESS, gu
 export const incrementRoundActionCreator = () => ({ type: INCREMENT_ROUND })
 const updateGameStatusActionCreator = game => ({ type: UPDATE_GAME_STATUS, game })
 const resetGameActionCreator = word => ({ type: RESET_GAME, word })
+export const toggleAwaitingReplyActionCreator = () => ({type: TOGGLE_AWAITING_REPLY})
 
 //THUNK CREATORS
 export const getFirstMachineWordThunkCreator = () =>
@@ -49,6 +51,7 @@ export const setupGameThunkCreator = (personality, userWord, computerWord) =>
       .catch(err => console.log(err))
 
 export const postRoundThunkCreator = (userWord, computerWord, gameId, personality, roundNum) => dispatch => {
+  dispatch(toggleAwaitingReplyActionCreator())
   // might need to send round number?
   axios.post(`/api/play/${gameId}`, {
     userWord,
@@ -61,7 +64,10 @@ export const postRoundThunkCreator = (userWord, computerWord, gameId, personalit
     .then(result => {
       dispatch(addRoundActionCreator(result.newRound))
       dispatch(updateHiddenGuessActionCreator(result.machineOneGuess))
-      
+      dispatch(toggleAwaitingReplyActionCreator())
+    })
+    .catch(() => {
+      dispatch(toggleAwaitingReplyActionCreator())
     })
 }
 
@@ -114,7 +120,8 @@ const initialState = {
   machineHiddenGuess: '',
   game: {},
   rounds: [],
-  roundNumber: 1
+  roundNumber: 1,
+  awaitingReply: false
 }
 
 //REDUCER
@@ -136,6 +143,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, { game: action.game })
     case RESET_GAME:
       return Object.assign({}, initialState, { machineWord: action.word })
+    case TOGGLE_AWAITING_REPLY:
+      return Object.assign({}, state, {awaitingReply: !state.awaitingReply})
     default:
       return state;
   }
