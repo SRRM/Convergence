@@ -393,7 +393,7 @@ module.exports = function (router, shared) {
         gameId: req.params.gameId,
         machineOneWord: req.body.computerWord,
         roundNumber: req.body.roundNumber,
-        userWord: req.body.userWord,
+        userWord: userWord,
       })
       await Word.create({
         word: userWord,
