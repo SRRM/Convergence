@@ -23,7 +23,7 @@ module.exports = function (router, shared) {
 
     if (vector.values) {
       return vector.values
-    } else if (Array.isArray(vector)) {
+    } else if (Array.isArray(vector) && vector.length) {
       return vector
     } else {
       return new Array(+shared.size).fill(0)
@@ -40,7 +40,8 @@ module.exports = function (router, shared) {
   }
 
   function addVectors(...vectors) {
-    console.log(vectors)
+    // allows addition of arbitrary number of vectors
+
     if (vectors.length === 2) {
       return vectorAddition(vectors[0], vectors[1])
     } else if (vectors.length > 2) {
@@ -61,6 +62,8 @@ module.exports = function (router, shared) {
   }
 
   function unit(vec) {
+    // returns unit vector in direction of vec
+
     let vector = maybeValues(vec)
     const mag = magnitude(vector)
     if (mag === 0) {
@@ -70,6 +73,10 @@ module.exports = function (router, shared) {
   }
 
   function personalityArray(personality) {
+    // turns personality into array of words
+    if (personality === '') {
+      return []
+    }
     return personality.match(/\w+/g).map(x => shared.getVector(x))
   }
 
@@ -81,10 +88,12 @@ module.exports = function (router, shared) {
     return 1 - (1 + shared.similarity(vectorOne, vectorTwo)) / 2
   }
 
+  const primingDistance = 0.4
+
   function isNear(personalityElement, userVector, computerVector) {
     let userDistance = getDistance(personalityElement, userVector)
     let computerDistance = getDistance(personalityElement, computerVector)
-    return userDistance < 0.3 || computerDistance < 0.3
+    return userDistance < primingDistance || computerDistance < primingDistance
   }
 
   console.log('api play visited')
@@ -131,7 +140,7 @@ module.exports = function (router, shared) {
 
       let userVector = await shared.getVector(userWord)
 
-      let netVector = addVectors(scalarMult(machineVector, 0.6), scalarMult(userVector, 0.4))
+      let netVector = addVectors(scalarMult(machineVector, 0.5), scalarMult(userVector, 0.5))
 
       let cloud = await shared.getNearestWords(netVector, 20) // [{word: '', dist: number}]
 
@@ -262,8 +271,6 @@ module.exports = function (router, shared) {
 
       // const pluralInputs = [...pluralVersions(userWord), ...pluralVersions(computerWord)]
 
-      console.log('req.body: ', req.body)
-
       const game = await Game.findOne({
         // <<<<<<< apiAi
         //         where: { randId: req.params.gameId },
@@ -311,7 +318,16 @@ module.exports = function (router, shared) {
 
       // <<<<<<< apiAi
 
-      let netVector = addVectors(scalarMult(computerVector, 0.4), scalarMult(userVector, 0.6))
+      const maxRandomness = 0.1
+
+      // we're going to pseudorandomize the weights for computerVector and userVector
+
+      let chanceElement = (Math.random()* 2 - 1) * maxRandomness
+
+
+      let netVector = unit(addVectors(scalarMult(computerVector, 0.4 + chanceElement), scalarMult(userVector, 0.4 - chanceElement), scalarMult(personality, 0.2)))
+
+
 
       let cloud = await shared.getNearestWords(netVector, 20)
       // =======
