@@ -88,7 +88,7 @@ module.exports = function (router, shared) {
     return 1 - (1 + shared.similarity(vectorOne, vectorTwo)) / 2
   }
 
-  const primingDistance = 0.4
+  const primingDistance = 0.2
 
   function isNear(personalityElement, userVector, computerVector) {
     let userDistance = getDistance(personalityElement, userVector)
@@ -122,6 +122,15 @@ module.exports = function (router, shared) {
 
       userWord = userWord.toLowerCase()
 
+      let userVector = await shared.getVector(userWord)
+      let error = ''
+
+      if (userVector === null) {
+        userWord = 'garbage'
+        userVector = await shared.getVector(userWord)
+        error = 'word not recognized'
+      }
+
       const pluralInputs = [...getVersions(userWord), ...getVersions(computerWord)]
       // const casings = casedArray(pluralInputs)
 
@@ -138,7 +147,8 @@ module.exports = function (router, shared) {
       console.timeEnd('computerWord')
       console.log('got computerWord!')
 
-      let userVector = await shared.getVector(userWord)
+
+      // console.log('userVector: ', userVector)
 
       let netVector = addVectors(scalarMult(machineVector, 0.5), scalarMult(userVector, 0.5))
 
@@ -167,7 +177,7 @@ module.exports = function (router, shared) {
         gameId: game.id,
         machineOneWord: req.body.computerWord,
         roundNumber: 0,
-        userWord: req.body.userWord,
+        userWord: userWord,
       })
 
       // console.log('fake json: ', {
@@ -181,7 +191,8 @@ module.exports = function (router, shared) {
         game,
         firstRound,
         machineFirstGuess,
-        cosineDistance
+        cosineDistance,
+        error
       })
     }
     catch (error) {
@@ -300,6 +311,15 @@ module.exports = function (router, shared) {
 
       personality = unit(addVectors(...personality))
 
+      let userVector = await shared.getVector(userWord)
+      let error = ''
+
+      if (userVector === null) {
+        userWord = 'garbage'
+        userVector = await shared.getVector(userWord)
+        error = 'word not recognized'
+      }
+
       const rounds = await Round.findAll({ where: { gameId: game.id } })
 
       const userHistory = rounds.map(x => x.userWord)
@@ -312,20 +332,18 @@ module.exports = function (router, shared) {
 
       const cosineDistance = getDistance(userWord, computerWord)
 
-      let userVector = await shared.getVector(userWord)
-
       let computerVector = await shared.getVector(computerWord)
 
       // <<<<<<< apiAi
 
-      const maxRandomness = 0.1
+      const maxRandomness = 0.05
 
       // we're going to pseudorandomize the weights for computerVector and userVector
 
-      let chanceElement = (Math.random()* 2 - 1) * maxRandomness
+      let chanceElement = (Math.random() * 2 - 1) * maxRandomness
 
 
-      let netVector = unit(addVectors(scalarMult(computerVector, 0.4 + chanceElement), scalarMult(userVector, 0.4 - chanceElement), scalarMult(personality, 0.2)))
+      let netVector = unit(addVectors(scalarMult(computerVector, 0.475 + chanceElement), scalarMult(userVector, 0.475 - chanceElement), scalarMult(personality, 0.05)))
 
 
 
@@ -390,7 +408,8 @@ module.exports = function (router, shared) {
       res.json({
         newRound,
         machineOneGuess,
-        cosineDistance
+        cosineDistance,
+        error
       })
     }
     catch (error) {
