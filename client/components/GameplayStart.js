@@ -46,6 +46,15 @@ export const GameplayStart = () => {
                             </button>
                         </div>
                     </div>
+
+                    <div className="ui error message">
+                        <div className="content">
+                            <div classNAme="header">
+                            </div>
+                            <p></p>
+                        </div>
+                        
+                    </div>
                 </form>  
             </div>  
         </div>
