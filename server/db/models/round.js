@@ -27,7 +27,13 @@ const Round = db.define('round', {
   cosineDistance: {
     type: Sequelize.FLOAT
   }
-  // commonWords: {
+
+})
+
+module.exports = Round
+
+
+// commonWords: {
   //   type: Sequelize.VIRTUAL,
   //   get() {
   //     let commonArray;
@@ -39,7 +45,4 @@ const Round = db.define('round', {
   //     return [...new Set(commonArray)].join(' ')
   //   }
   // }
-})
-
-module.exports = Round
 

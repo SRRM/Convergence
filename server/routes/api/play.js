@@ -1,5 +1,5 @@
 // const router = require('express').Router()
-const { Game, Round } = require('../../db/models')
+const { Game, Round, Word } = require('../../db/models')
 const commonWords = require('../../commonWords')
 
 const getVersions = require('../../getVersions')
@@ -292,6 +292,16 @@ module.exports = function (router, shared) {
         machineOneWord: req.body.computerWord,
         roundNum: req.body.roundNum,
         userWord: req.body.userWord,
+      })
+      await Word.create({
+        word: userWord,
+        agent: 'user',
+        roundId: newRound.id
+      })
+      await Word.create({
+        word: computerWord,
+        agent: 'machine',
+        roundId: newRound.id
       })
       res.json({
         newRound,
