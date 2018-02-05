@@ -176,7 +176,7 @@ module.exports = function (router, shared) {
 
 
 
-      const game = updatedGame[1][0]
+      const game = updatedGame[1]
 
       let cosineDistance = 1 - shared.similarity(userWord, computerWord)
 
