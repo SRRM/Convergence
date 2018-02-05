@@ -8,13 +8,26 @@ import history from '../history'
 class Gameplay extends Component {
     constructor(){
         super()
+        this.state = {
+            inputValue: '',
+            emptyInput: true
+        }
         this.handleClick = this.handleClick.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
-    handleClick(evt)  {
+    handleChange(evt){
+        //
+        //set state as teh last thing
+        this.setState({inputValue: evt.target.value})
+
+    }
+
+    handleClick(evt){
         evt.preventDefault()
-        const userGuess = evt.target.userGuess.value
-        evt.target.userGuess.value = '';
+        console.log('from form')
+        const userGuess = this.state.inputValue
+        this.setState({inputValue: ''})
         // document.getElementById('user-guess-form-button').disabled = true;
         const computerGuess = store.getState().machineHiddenGuess
         const gameId = store.getState().game.id
@@ -28,7 +41,7 @@ class Gameplay extends Component {
             store.dispatch(winGameThunkCreator(gameId, userGuess, roundNumber))
             console.log('winning thunk dispatched!!!!')
             history.push('/gameplay/end')
-        } else if (roundNumber === 5) {
+        } else if (roundNumber >= 20) {
             // dispatch lose game thunk creator
             console.log('failure :(')
             store.dispatch(loseGameThunkCreator(gameId, userGuess, computerGuess, roundNumber))
@@ -41,6 +54,7 @@ class Gameplay extends Component {
             //server also replies with the complete round object
             store.dispatch(incrementRoundActionCreator())
             store.dispatch(postRoundThunkCreator(userGuess, computerGuess, gameId, personality, roundNumber))
+            
             
         }
     
@@ -67,6 +81,8 @@ class Gameplay extends Component {
                                 id="daInput"
                                 name="userGuess"
                                 placeholder="Enter your next guess"
+                                onChange={this.handleChange}
+                                value={this.state.inputValue}
                             />
                         </div>
                         <div className="six wide column">
@@ -74,6 +90,7 @@ class Gameplay extends Component {
                                 id="user-guess-form-button"
                                 className="fluid ui button"
                                 type="submit"
+                                disabled = {!this.state.inputValue.length || this.props.awaitingReply}
                             >
                                 SUBMIT
                     </button>
@@ -88,6 +105,7 @@ class Gameplay extends Component {
 const mapState = state => ({
     roundNumber: state.roundNumber,
     machineWord: state.machineWord,
-    humanWord: state.humanWord
+    humanWord: state.humanWord,
+    awaitingReply: state.awaitingReply
 })
 export default connect(mapState)(Gameplay)
