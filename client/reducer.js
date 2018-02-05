@@ -61,6 +61,7 @@ export const postRoundThunkCreator = (userWord, computerWord, gameId, personalit
     .then(result => {
       dispatch(addRoundActionCreator(result.newRound))
       dispatch(updateHiddenGuessActionCreator(result.machineOneGuess))
+      
     })
 }
 
