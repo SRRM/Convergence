@@ -1,27 +1,21 @@
 
-
-// module.exports = router
+const Sequelize = require('sequelize')
 
 module.exports = function (router, shared) {
   console.log('api games visited')
   const { Game, Round } = require('../../db/models')
-  // const router = require('express').Router()
+
   //get all completed games and total rounds each took
   router.get('/api/games', async (req, res, next) => {
     try {
       const games = await Game.findAll({
-        // where: {
-        //   status: {
-        //     $or: [{status: 'Converged'}, {status: 'Failed'}]
-        //   }
-        // },
-        attributes: {
-          include: [[Sequelize.fn("COUNT", Sequelize.col("rounds.id")), "totalRounds"]]
-        },
+        group: ['game.id'],
+        attributes: ['id', [Sequelize.fn('COUNT', Sequelize.col('rounds.id')), 'totalRounds']],
         include: [{
-          model: Round, attributes: []
-        }],
-        group: ['Game.id']
+          model: Round,
+          attributes: [],
+          duplicating: false
+        }]
       })
       res.json(games)
     }
@@ -48,3 +42,4 @@ module.exports = function (router, shared) {
     }
   })
 }
+
