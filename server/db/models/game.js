@@ -14,7 +14,7 @@ const Game = db.define('game', {
   },
   status: {
     type: Sequelize.ENUM('Converged', 'Failed', 'Aborted')
-  }
+  },
 })
 
 
