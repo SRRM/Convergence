@@ -34,8 +34,8 @@ class WordGraph extends Component {
     const bottomEdge = topEdge + wordHeight
     const middle = topEdge + halfOfHeight
     const {word1, word2, dist} = row
-    const lineLength = (dist) * 300 + 3
-    const lineOpacity = lineLength/303 * 0.4
+    const lineLength = (dist) * 1000 + 3
+    const lineOpacity = lineLength/1003 * 0.9
     console.log(lineOpacity)
     // ctx.fillRect(0, topEdge, 900, 1)
     // ctx.fillRect(0, bottomEdge, 900, 1)

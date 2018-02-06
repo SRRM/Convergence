@@ -8,7 +8,7 @@ import { LandingPage } from './components/LandingPage'
 import  WordGraph  from './components/WordGraph'
 import { TutorialSlides } from './components/TutorialSlides'
 import Gameplay from './components/Gameplay'
-import {GameplayStart} from './components/GameplayStart'
+import GameplayStart from './components/GameplayStart'
 import {Background} from './components/Background'
 import GameplayEnd from './components/GameplayEnd'
 
