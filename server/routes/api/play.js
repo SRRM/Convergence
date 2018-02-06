@@ -285,10 +285,10 @@ module.exports = function (router, shared) {
       const game = await Game.findOne({
         // <<<<<<< apiAi
         //         where: { randId: req.params.gameId },
-        //         inlude: [{ model: round }]
+        //         include: [{ model: round }]
         // =======
         where: { id: req.params.gameId },
-        inlude: [{ all: true }]
+        include: [{ all: true }]
         // >>>>>>> master
       })
 
