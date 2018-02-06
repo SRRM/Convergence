@@ -49,6 +49,7 @@
     "chalk": "^2.3.0",
     "compromise": "^11.2.3",
     "inquirer": "^5.0.1",
+    "ml-pca": "^2.1.0",
     "pg": "^6.4.1",
     "pluralize": "^7.0.0",
     "require-reload": "^0.2.2",
