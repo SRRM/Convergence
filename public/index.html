@@ -21,7 +21,7 @@
       text-decoration: none;
     }
 
-    h1, h2 {
+    h1, h2, h3 {
       text-align: center;
       font-family: 'Rubik', sans-serif;
       color: rgb(248, 245, 237)
@@ -36,6 +36,28 @@
     h2{
       font-size: 2.5rem;
       color:rgb(141, 132, 142);
+    }
+
+    .words-h3 {
+      font-size: 4rem;
+      text-align: center;
+      color: rgb(84, 79, 90);
+    }
+
+    .choice-h2 {
+      font-size: 2rem;
+      margin: 0px;
+    }
+    .round-h2 {
+      margin-bottom: 3rem;
+      font-size: 2rem;
+    }
+
+    h4 {
+      margin: 2rem;
+      font-size:1.5rem;
+      text-align: center;
+      color: rgb(141, 132, 142)
     }
 
     .page-title{
@@ -70,7 +92,7 @@
       width: 100%;
       margin: auto;
       position: relative;
-      top: 40%;
+      top: 45%;
       transform: translateY(-50%)
     }
 
@@ -81,7 +103,8 @@
 
     #user-guess-form{
       display: block;
-      margin: auto;
+      margin: 0px auto;
+      padding: 2rem;  
     }
 
     #user-guess-form button, #first-word-form-subsection button {
@@ -99,7 +122,6 @@
       border-radius: 20px;
       padding: 2rem;
       color: white;
-      height: 300px;
       width: 700px;
       margin: auto;
       position: relative;
@@ -107,13 +129,19 @@
       transform: translateY(-50%)
     }
 
-    .tutorial-slide h2{
+
+    .tutorial-slide h2, #game-setup h2{
       color: orange;
     }
 
     .tutorial-links {
       display: flex;
       padding-top: 1rem;
+    }
+
+    .tutorial-p {
+      display: block;
+      height: 96px;
     }
 
     .tutorial-links a {
@@ -176,11 +204,99 @@
       padding-top: 1rem;
     }
 
+    #gameplay-content{
+      padding: 1rem;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%)
+    }
+
+    .choice-info {
+      width: 900px;
+      margin: auto;
+    }
+
     #canvas-wrapper {
       margin-top: 2rem;
       height: 70vh;
       width: 100vw;
     }
+    @keyframes text-color {
+    from {color: #c9d2f2}
+    to {color: #f7d091}
+}
+    .special-text {
+      animation-name: text-color;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    }
+
+    .ui.form input:not([type]) {
+      font-family: 'Roboto', sans-serif;
+    }
+    .ui.button {
+      font-weight: 400;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 1px;
+
+    }
+
+    @keyframes winning {
+    from {color: #f7ae7e}
+    to {color: #f7d091}
+}
+
+    .winning {
+      text-shadow: 0px 0px 32px rgba(0,0,0,0.1);
+      font-size: 6rem;
+      animation-name: winning;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    margin-bottom: 3rem;
+    }
+
+    @keyframes game-over {
+    from {color: #f7aad3}
+    to {color: #b8b3f8}
+}
+
+.losing {
+      text-shadow: 0px 0px 32px rgba(0,0,0,0.1);
+      font-size: 6rem;
+      animation-name: game-over;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    margin-bottom: 3rem;
+    }
+
+.game-over-info {
+  position: relative;
+  width: 900px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0px auto;
+  padding: 1rem;
+}
+
+
+.ui.button.end-buttons {
+  background-color: rgb(141, 132, 142);
+  display: block;
+  width: 256px;
+      color: white;
+      margin: auto;
+}
+
+.ui.button.end-buttons:hover {
+  background-color: rgb(84, 79, 90);
+      color: rgb(248, 227, 187);
+}
   </style>
 </head>
 <body>
