@@ -53,7 +53,7 @@ export const setupGameThunkCreator = (personality, userWord, computerWord) =>
           dispatch(setupGameActionCreator(result.game))
           dispatch(addRoundActionCreator(result.firstRound))
           dispatch(updateHiddenGuessActionCreator(result.machineFirstGuess))
-          
+
         } else {
           dispatch(correctBadInputActionCreator(result.error, result.firstRound.userWord))
           dispatch(setupGameActionCreator(result.game))
@@ -88,9 +88,9 @@ export const postRoundThunkCreator = (userWord, computerWord, gameId, personalit
         dispatch(addRoundActionCreator(result.newRound))
         dispatch(updateHiddenGuessActionCreator(result.machineOneGuess))
         dispatch(toggleAwaitingReplyActionCreator())
-        
+
       } else {
-        console.log(result)
+        // console.log(result)
         dispatch(correctBadInputActionCreator(result.error, result.newRound.userWord))
         dispatch(addRoundActionCreator(result.newRound))
         dispatch(updateHiddenGuessActionCreator(result.machineOneGuess))
@@ -130,7 +130,7 @@ export const loseGameThunkCreator = (gameId, userWord, computerWord, roundNumber
     .then(result => {
       dispatch(addRoundActionCreator(result.newRound))
       dispatch(updateGameStatusActionCreator(result.game))
-      console.log(result)
+      // console.log(result)
       // history.push
     })
 }

@@ -12,20 +12,20 @@ class WordGraph extends Component {
    this.updateCanvas();
  }
 
- 
+
  updateCanvas(){
   const arr = this.props.rounds
   const canvas = document.querySelector('#visualizer')
   canvas.setAttribute('width', document.querySelector('#canvas-wrapper').clientWidth)
   canvas.setAttribute('height', document.querySelector('#canvas-wrapper').clientHeight)
   const ctx = canvas.getContext('2d')
-  
+
   const midpoint = document.querySelector('#canvas-wrapper').clientWidth / 2
-  
+
   const wordHeight = 16
   const halfOfHeight = (wordHeight / 2) - 1
   const spaceBetweenLinesAndWords = wordHeight
-  
+
   ctx.font = `${wordHeight}pt Arial`
   const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1)
 
@@ -36,7 +36,7 @@ class WordGraph extends Component {
     const {word1, word2, dist} = row
     const lineLength = (dist) * 300 + 3
     const lineOpacity = lineLength/303 * 0.4
-    console.log(lineOpacity)
+    // console.log(lineOpacity)
     // ctx.fillRect(0, topEdge, 900, 1)
     // ctx.fillRect(0, bottomEdge, 900, 1)
     ctx.fillStyle = `rgba(141, 132, 142, ${lineOpacity})`
@@ -47,15 +47,15 @@ class WordGraph extends Component {
     ctx.textAlign = 'left'
     ctx.fillText(capitalize(word2), midpoint + (lineLength / 2 ) + spaceBetweenLinesAndWords, bottomEdge)
   }
- 
+
   arr.forEach(drawRow)
- 
+
  }
 
  render(){
- 
 
-  
+
+
 
   return (
     <div  className='overlay'>
@@ -65,8 +65,8 @@ class WordGraph extends Component {
         <canvas id="visualizer"></canvas>
       </div>
       <div className="ui grid">
-          
-          
+
+
             <div className="eight wide column">
               <button
                 className="fluid ui button"
