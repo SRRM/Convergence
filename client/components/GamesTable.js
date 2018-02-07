@@ -19,6 +19,7 @@ class GamesTable extends Component {
     const games = this.props.gameHistory
     return (
       <div className="overlay">
+        <div className = "scrollFix">
       <h2 className= "page-title">Game History</h2>
       <div className="summary-table">
         <table className="ui selectable table">
@@ -46,6 +47,7 @@ class GamesTable extends Component {
             </tr>
           </tfoot>
         </table>
+        </div>
         </div>
       </div>
     )

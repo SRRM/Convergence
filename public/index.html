@@ -256,9 +256,16 @@
       margin-top: 2rem;
       height: 75vh;
       width: 100vw;
-      overflow-y: auto;
+      overflow-y: scroll;
+    }
+    #canvas-wrapper canvas {
+      overflow-y: scroll;
     }
 
+
+    .scrollFix {
+      overflow-y: scroll
+    }
     @keyframes text-color {
       from {
         color: #c9d2f2
