@@ -34,8 +34,12 @@ class Routes extends Component {
             />
 
             <Route
-             component={WordGraph}
-             exact path="/wordgraph"
+              exact path="/gameplay/:gameId/end"
+              render = { (props) => <GameplayEnd gameId = {props.match.params.gameId}/>}
+            />
+
+            <Route
+             exact path="/games/:gameId" render = { (props) => <WordGraph gameId = {props.match.params.gameId}/>}
              />
 
             <Route
@@ -61,10 +65,6 @@ class Routes extends Component {
               path="/gameplay"
             />
 
-            <Route
-              component={GameplayEnd}
-              exact path="/gameplay/end"
-            />
 
             {/* Displays LandingPage as a fallback */}
             <Route component={LandingPage} />

@@ -21,7 +21,7 @@ const GameplayEnd = (props) => {
             <button
               className="ui button end-buttons"
               onClick={() => {
-                history.push('/wordgraph')
+                history.push(`/games/${props.game.randId}`)
               }}
             >
               GAME SUMMARY
@@ -60,7 +60,7 @@ const GameplayEnd = (props) => {
               <button
                 className="ui button end-buttons"
                 onClick={() => {
-                  history.push('/wordgraph')
+                  history.push(`/games/${props.game.randId}`)
                 }}
               >
                 GAME SUMMARY

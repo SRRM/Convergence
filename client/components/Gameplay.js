@@ -25,7 +25,7 @@ class Gameplay extends Component {
 
     handleClick(evt) {
         evt.preventDefault()
-        console.log('from form')
+        // console.log('from form')
         const userGuess = this.state.inputValue
         this.setState({ inputValue: '' })
         // document.getElementById('user-guess-form-button').disabled = true;
@@ -36,26 +36,23 @@ class Gameplay extends Component {
         store.dispatch(storeHumanWordActionCreator(userGuess))
         store.dispatch(storeMachineWordActionCreator(computerGuess))
         if (userGuess === computerGuess) {
-            console.log('hooray!')
+            // console.log('hooray!')
             // dispatch an action
             store.dispatch(winGameThunkCreator(gameId, userGuess, roundNumber))
             console.log('winning thunk dispatched!!!!')
-            history.push('/gameplay/end')
+            history.push(`/gameplay/${this.props.game.randId}/end`)
         } else if (roundNumber >= 20) {
             // dispatch lose game thunk creator
-            console.log('failure :(')
+            // console.log('failure :(')
             store.dispatch(loseGameThunkCreator(gameId, userGuess, computerGuess, roundNumber))
-            console.log('losing thunk dispatched!!!!!!')
-            history.push('/gameplay/end')
-
+            // console.log('losing thunk dispatched!!!!!!')
+            history.push(`/gameplay/${this.props.game.randId}/end`)
         }
         else {
             //send this stuff to server so that AI can come up with response
             //server also replies with the complete round object
             store.dispatch(incrementRoundActionCreator())
             store.dispatch(postRoundThunkCreator(userGuess, computerGuess, gameId, personality, roundNumber))
-
-
         }
 
     }
@@ -79,10 +76,6 @@ class Gameplay extends Component {
                             </div>
                         </div>
                     </div>
-
-
-
-
 
                     <div className="ui grid">
                         <form
@@ -141,6 +134,7 @@ const mapState = state => ({
     machineWord: state.machineWord,
     humanWord: state.humanWord,
     awaitingReply: state.awaitingReply,
-    error: state.error
+    error: state.error,
+    game: state.game
 })
 export default connect(mapState)(Gameplay)
