@@ -9,11 +9,11 @@ module.exports = function (router, shared) {
   router.get('/api/games/history/:pageNumber', async (req, res, next) => {
     try {
       let pageNum = req.params.pageNumber
-      let offset = (pageNum - 1) * 10
+      let offset = (pageNum - 1) * 15
       const games = await Game.findAll({
         order: [['createdAt', 'DESC']],
         offset: offset,
-        limit: 10,
+        limit: 15,
         include: [{
           model: Round,
         }]

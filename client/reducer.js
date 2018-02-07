@@ -154,9 +154,10 @@ export const getGameRoundsThunkCreator = (gameId) => dispatch =>
   )
 
 export const getPastGamesThunkCreator = (page) => dispatch =>
-  axios.get(`api/games/history/${page}`)
+  axios.get(`/api/games/history/${page}`)
     .then(res => res.data)
-    .then(result => dispatch(getPastGamesActionCreator(result))
+    .then(result =>
+      dispatch(getPastGamesActionCreator(result))
   )
 
 //INITIAL STATE
