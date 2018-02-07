@@ -114,13 +114,17 @@
     }
 
     #user-guess-form button,
-    #first-word-form-subsection button {
+    #first-word-form-subsection button,
+    #game-summary-play-button,
+    #game-summary-share-button {
       background-color: rgb(141, 132, 142);
       color: white;
     }
 
     #user-guess-form button:hover,
-    #first-word-form-subsection button:hover {
+    #first-word-form-subsection button:hover,
+    #game-summary-share-button:hover,
+    #game-summary-play-button:hover {
       background-color: rgb(84, 79, 90);
       color: rgb(248, 227, 187);
     }
@@ -246,8 +250,9 @@
 
     #canvas-wrapper {
       margin-top: 2rem;
-      height: 70vh;
+      height: 75vh;
       width: 100vw;
+      overflow-y: auto;
     }
 
     @keyframes text-color {
