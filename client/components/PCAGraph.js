@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 React.PropTypes = Proptypes
 import { connect } from 'react-redux'
 // import { Chart } from 'react-d3-core'
-import { VictoryChart, VictoryScatter, VictoryTheme } from 'victory'
+import { VictoryChart, VictoryScatter, VictoryTheme, VictoryTooltip } from 'victory'
 
 const dummyData = [
   [2.5, 2.4],
@@ -18,7 +18,8 @@ const dummyData = [
   [1.1, 0.9]
 ].map(pair => ({
   x: pair[0],
-  y: pair[1]
+  y: pair[1],
+  label: "word"
 }));
 
 // const dummyData = [
@@ -58,8 +59,9 @@ class PCAGraph extends Component {
         >
           <VictoryScatter
             style={{ data: { fill: "#000" } }}
-            size={2}
+            size={5}
             data={dummyData}
+            labelComponent={<VictoryTooltip />}
           />
         </VictoryChart>
       </div>
