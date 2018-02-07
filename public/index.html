@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Convergence</title>
-    <script src="/bundle.js" defer></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
-    <link href="https://fonts.googleapis.com/css?family=Rubik|Roboto" rel="stylesheet">
 
-    <style>
-    body{
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Convergence</title>
+  <script src="/bundle.js" defer></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
+  <link href="https://fonts.googleapis.com/css?family=Rubik|Roboto" rel="stylesheet">
+
+  <style>
+    body {
       height: 100%;
       font-size: 16px;
       margin: 0px;
@@ -23,9 +24,11 @@
 
     a{
       text-decoration: none;
-    }
+      }
 
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
       text-align: center;
       font-family: 'Rubik', sans-serif;
       color: rgb(248, 245, 237)
@@ -37,9 +40,9 @@
       font-size: 10rem;
     }
 
-    h2{
+    h2 {
       font-size: 2.5rem;
-      color:rgb(141, 132, 142);
+      color: rgb(141, 132, 142);
     }
 
     .words-h3 {
@@ -52,6 +55,7 @@
       font-size: 2rem;
       margin: 0px;
     }
+
     .round-h2 {
       margin-bottom: 3rem;
       font-size: 2rem;
@@ -59,12 +63,12 @@
 
     h4 {
       margin: 2rem;
-      font-size:1.5rem;
+      font-size: 1.5rem;
       text-align: center;
       color: rgb(141, 132, 142)
     }
 
-    .page-title{
+    .page-title {
       padding: 2rem;
     }
 
@@ -75,7 +79,9 @@
       z-index: 20;
     }
 
-    div.particles, div#main, div#app {
+    div.particles,
+    div#main,
+    div#app {
       height: 100vh;
 
     }
@@ -88,11 +94,11 @@
       width: 200px;
       cursor: pointer;
       border: none;
-      text-align:center;
+      text-align: center;
       font-size: 2rem;
     }
 
-    #landing-page-info{
+    #landing-page-info {
       width: 100%;
       margin: auto;
       position: relative;
@@ -105,18 +111,24 @@
       color: rgb(248, 227, 187);
     }
 
-    #user-guess-form{
+    #user-guess-form {
       display: block;
       margin: 0px auto;
       padding: 2rem;
     }
 
-    #user-guess-form button, #first-word-form-subsection button {
+    #user-guess-form button,
+    #first-word-form-subsection button,
+    #game-summary-play-button,
+    #game-summary-share-button {
       background-color: rgb(141, 132, 142);
       color: white;
     }
 
-    #user-guess-form button:hover, #first-word-form-subsection button:hover {
+    #user-guess-form button:hover,
+    #first-word-form-subsection button:hover,
+    #game-summary-share-button:hover,
+    #game-summary-play-button:hover {
       background-color: rgb(84, 79, 90);
       color: rgb(248, 227, 187);
     }
@@ -134,7 +146,8 @@
     }
 
 
-    .tutorial-slide h2, #game-setup h2{
+    .tutorial-slide h2,
+    #game-setup h2 {
       color: orange;
     }
 
@@ -175,7 +188,26 @@
       color: rgb(248, 227, 187);
     }
 
-    div#game-setup{
+    .history-table-head {
+      background-color: rgba(255, 255, 255, 0)
+    }
+
+    .ui.table {
+      background-color: rgba(255, 255, 255, 0);
+    }
+
+    .ui.table.head {
+      background-color: rgba(255, 255, 255, 0)
+    }
+
+
+    .summary-table {
+      position: relative;
+      margin-left: 15%;
+      margin-right: 15%;
+    }
+
+    div#game-setup {
       background-color: rgba(34, 26, 26, 0.8);
       border-radius: 20px;
       padding: 2rem;
@@ -187,7 +219,7 @@
       transform: translateY(-50%)
     }
 
-    .game-setup-form{
+    .game-setup-form {
       padding: 1rem;
     }
 
@@ -208,7 +240,7 @@
       padding-top: 1rem;
     }
 
-    #gameplay-content{
+    #gameplay-content {
       padding: 1rem;
       position: relative;
       top: 50%;
@@ -222,24 +254,32 @@
 
     #canvas-wrapper {
       margin-top: 2rem;
-      height: 70vh;
+      height: 75vh;
       width: 100vw;
+      overflow-y: auto;
     }
+
     @keyframes text-color {
-    from {color: #c9d2f2}
-    to {color: #f7d091}
-}
+      from {
+        color: #c9d2f2
+      }
+      to {
+        color: #f7d091
+      }
+    }
+
     .special-text {
       animation-name: text-color;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
     }
 
     .ui.form input:not([type]) {
       font-family: 'Roboto', sans-serif;
     }
+
     .ui.button {
       font-weight: 400;
       font-family: 'Roboto', sans-serif;
@@ -248,62 +288,72 @@
     }
 
     @keyframes winning {
-    from {color: #f7ae7e}
-    to {color: #f7d091}
-}
+      from {
+        color: #f7ae7e
+      }
+      to {
+        color: #f7d091
+      }
+    }
 
     .winning {
-      text-shadow: 0px 0px 32px rgba(0,0,0,0.1);
+      text-shadow: 0px 0px 32px rgba(0, 0, 0, 0.1);
       font-size: 6rem;
       animation-name: winning;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
-    margin-bottom: 3rem;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
+      margin-bottom: 3rem;
     }
 
     @keyframes game-over {
-    from {color: #f7aad3}
-    to {color: #b8b3f8}
-}
-
-.losing {
-      text-shadow: 0px 0px 32px rgba(0,0,0,0.1);
-      font-size: 6rem;
-      animation-name: game-over;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
-    margin-bottom: 3rem;
+      from {
+        color: #f7aad3
+      }
+      to {
+        color: #b8b3f8
+      }
     }
 
-.game-over-info {
-  position: relative;
-  width: 900px;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: 0px auto;
-  padding: 1rem;
-}
+    .losing {
+      text-shadow: 0px 0px 32px rgba(0, 0, 0, 0.1);
+      font-size: 6rem;
+      animation-name: game-over;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
+      margin-bottom: 3rem;
+    }
+
+    .game-over-info {
+      position: relative;
+      width: 900px;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0px auto;
+      padding: 1rem;
+    }
 
 
-.ui.button.end-buttons {
-  background-color: rgb(141, 132, 142);
-  display: block;
-  width: 256px;
+    .ui.button.end-buttons {
+      background-color: rgb(141, 132, 142);
+      display: block;
+      width: 256px;
       color: white;
       margin: auto;
-}
+    }
 
-.ui.button.end-buttons:hover {
-  background-color: rgb(84, 79, 90);
+    .ui.button.end-buttons:hover {
+      background-color: rgb(84, 79, 90);
       color: rgb(248, 227, 187);
-}
+    }
   </style>
 </head>
+
 <body>
   <div id="app"></div>
 </body>
+
 </html>
