@@ -235,18 +235,10 @@ module.exports = function (router, shared) {
     try {
 
       const { userWord, computerWord } = req.body
-
-      const updatedGame = await Game.update({
-        status: 'Failed'
-      },
-        {
-          where: {
-            id: req.params.gameId
-          }
-        })
-
-
-
+      const updatedGame = await Game.update(
+        { status: 'Failed' },
+        { where: { id: req.params.gameId }, returning: true, plain: true}
+      )
       const game = updatedGame[1]
 
       const cosineDistance = getDistance(userWord, computerWord)
@@ -258,9 +250,7 @@ module.exports = function (router, shared) {
         roundNumber: req.body.roundNumber,
         userWord: req.body.userWord,
       })
-
-
-
+      
       res.json({
         game,
         newRound
@@ -285,10 +275,10 @@ module.exports = function (router, shared) {
       const game = await Game.findOne({
         // <<<<<<< apiAi
         //         where: { randId: req.params.gameId },
-        //         inlude: [{ model: round }]
+        //         include: [{ model: round }]
         // =======
         where: { id: req.params.gameId },
-        inlude: [{ all: true }]
+        include: [{ all: true }]
         // >>>>>>> master
       })
 

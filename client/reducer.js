@@ -10,7 +10,9 @@ const INCREMENT_ROUND = "INCREMENT_ROUND"
 const UPDATE_GAME_STATUS = "UPDATE_GAME_STATUS"
 const RESET_GAME = "RESET_GAME"
 const TOGGLE_AWAITING_REPLY = "TOGGLE_AWAITING_REPLY"
-
+const CORRECT_BAD_INPUT = "CORRECT_BAD_INPUT"
+const CLEAR_ERROR = "CLEAR_ERROR"
+const GET_GAME_ROUNDS = "GET_GAME_ROUNDS"
 
 //ACTION CREATORS
 const updateHumanWordActionCreator = word => ({ type: SUBMIT_WORD, word })
@@ -24,6 +26,9 @@ export const incrementRoundActionCreator = () => ({ type: INCREMENT_ROUND })
 const updateGameStatusActionCreator = game => ({ type: UPDATE_GAME_STATUS, game })
 const resetGameActionCreator = word => ({ type: RESET_GAME, word })
 export const toggleAwaitingReplyActionCreator = () => ({type: TOGGLE_AWAITING_REPLY})
+const correctBadInputActionCreator = (error, newInput) => ({type: CORRECT_BAD_INPUT, error, newInput})
+const clearErrorActionCreator = () => ({type: CLEAR_ERROR})
+const getGameRoundsActionCreater = (result) => ({type: GET_GAME_ROUNDS, result})
 
 //THUNK CREATORS
 export const getFirstMachineWordThunkCreator = () =>
@@ -36,22 +41,40 @@ export const getFirstMachineWordThunkCreator = () =>
       .catch(err => console.log(err))
 
 export const setupGameThunkCreator = (personality, userWord, computerWord) =>
-  dispatch =>
-    axios.post(`/api/play/start`, {
+  dispatch => {
+    dispatch(clearErrorActionCreator())
+    return axios.post(`/api/play/start`, {
       personality,
       userWord,
       computerWord
     })
       .then(res => res.data)
       .then(result => {
-        dispatch(setupGameActionCreator(result.game))
-        dispatch(addRoundActionCreator(result.firstRound))
-        dispatch(updateHiddenGuessActionCreator(result.machineFirstGuess))
+        if (!result.error){
+          dispatch(setupGameActionCreator(result.game))
+          dispatch(addRoundActionCreator(result.firstRound))
+          dispatch(updateHiddenGuessActionCreator(result.machineFirstGuess))
+
+        } else {
+          dispatch(correctBadInputActionCreator(result.error, result.firstRound.userWord))
+          dispatch(setupGameActionCreator(result.game))
+          dispatch(addRoundActionCreator(result.firstRound))
+          dispatch(updateHiddenGuessActionCreator(result.machineFirstGuess))
+        }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        //expecting object with fields game, firstround, machineFirstGuess, user interpreted word
+        //dispatch CORRECT_BAD_INPUT changes userword and makes error component vsible
+        // dispatch(setupGameActionCreator(result.game))
+        // dispatch(addRoundActionCreator(result.firstRound))
+        // dispatch(updateHiddenGuessActionCreator(result.machineFirstGuess))
+        console.log(err)
+      })
+    }
 
 export const postRoundThunkCreator = (userWord, computerWord, gameId, personality, roundNumber) => dispatch => {
   dispatch(toggleAwaitingReplyActionCreator())
+  dispatch(clearErrorActionCreator())
   // might need to send round number?
   axios.post(`/api/play/${gameId}`, {
     userWord,
@@ -62,10 +85,18 @@ export const postRoundThunkCreator = (userWord, computerWord, gameId, personalit
   })
     .then(res => res.data)
     .then(result => {
-      dispatch(addRoundActionCreator(result.newRound))
-      dispatch(updateHiddenGuessActionCreator(result.machineOneGuess))
+      if (!result.error){
+        dispatch(addRoundActionCreator(result.newRound))
+        dispatch(updateHiddenGuessActionCreator(result.machineOneGuess))
+        dispatch(toggleAwaitingReplyActionCreator())
 
-      dispatch(toggleAwaitingReplyActionCreator())
+      } else {
+        // console.log(result)
+        dispatch(correctBadInputActionCreator(result.error, result.newRound.userWord))
+        dispatch(addRoundActionCreator(result.newRound))
+        dispatch(updateHiddenGuessActionCreator(result.machineOneGuess))
+        dispatch(toggleAwaitingReplyActionCreator())
+      }
     })
     .catch(() => {
       dispatch(toggleAwaitingReplyActionCreator())
@@ -111,8 +142,14 @@ export const resetGameThunkCreator = () => dispatch =>
     .then(result => {
       dispatch(resetGameActionCreator(result.computerWord))
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err)
+)
 
+export const getGameRoundsThunkCreator = (gameId) => dispatch =>
+  axios.get(`/api/games/${gameId}`)
+    .then(res => res.data)
+    .then(result => dispatch(getGameRoundsActionCreater(result))
+  )
 
 //INITIAL STATE
 const initialState = {
@@ -122,7 +159,8 @@ const initialState = {
   game: {},
   rounds: [],
   roundNumber: 1,
-  awaitingReply: false
+  awaitingReply: false,
+  error: ''
 }
 
 //REDUCER
@@ -146,6 +184,12 @@ function reducer(state = initialState, action) {
       return Object.assign({}, initialState, { machineWord: action.word })
     case TOGGLE_AWAITING_REPLY:
       return Object.assign({}, state, {awaitingReply: !state.awaitingReply})
+    case CORRECT_BAD_INPUT:
+      return Object.assign({}, state, {humanWord: action.newInput, error: action.error})
+    case CLEAR_ERROR:
+      return Object.assign({}, state, {error: ''})
+    case GET_GAME_ROUNDS:
+      return Object.assign({}, state, {rounds: action.result.rounds, game: action.result})
     default:
       return state;
   }

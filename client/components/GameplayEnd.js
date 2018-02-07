@@ -1,19 +1,3 @@
-/*
-winning screen:
-
-        You Won!
-          WORD
-    converged in 12 rounds
-  game summary    play again?
-
-losing screen:
-
-                      Game over
-    you guessed: userGuess    computer guessed: computerGuess
-              game summary    try again?
-
-*/
-
 import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
@@ -25,56 +9,58 @@ const GameplayEnd = (props) => {
   if (props.humanWord === props.machineWord /* props.game.status === "Converged" */) {
     return (
       <div className="overlay" >
-        <h2>You Won!</h2>
+      <div className="game-over-info">
+        <h2 className="winning">VICTORY!</h2>
 
-        <h2>{props.machineWord}</h2>
+        <h2>You both guessed "{props.machineWord}"</h2>
 
-        <h4>Successfully converged in {props.rounds.length - 1} rounds</h4>
+        <h4>It only took you {props.rounds.length - 1} rounds lol</h4>
 
         <div className="ui grid">
-          <div
-            className="ui grid eight wide column"
-          >
-            <div className="eight wide column">
-              <button
-                className="fluid ui button"
-                onClick={() => {
-                  history.push('/wordgraph')
-                }}
-              >
-                GAME SUMMARY
+          <div className="eight wide column">
+            <button
+              className="ui button end-buttons"
+              onClick={() => {
+                history.push(`/games/${props.game.randId}`)
+              }}
+            >
+              GAME SUMMARY
               </button>
-            </div>
-            <div className="eight wide column">
-              <button
-                className="fluid ui button"
-                onClick={props.setupGame}
-              >
-                PLAY AGAIN?
-              </button>
-            </div>
           </div>
+          <div className="eight wide column">
+            <button
+              className="ui button end-buttons"
+              onClick={props.setupGame}
+            >
+              PLAY AGAIN?
+              </button>
+          </div>
+        </div>
         </div>
       </div>
     )
   } else if (props.humanWord !== props.machineWord /* props.game.status === "Failed" */) {
     return (
       <div className="overlay" >
-        <h2>Game Over!</h2>
+        <div className="game-over-info">
+          <h2 className="losing">GAME OVER</h2>
+          <div className=" ui grid">
+            <div className="eight wide column">
+              <h2 className="choice-h2">You guessed </h2>
+              <h3 className="words-h3">{props.humanWord}</h3>
+            </div>
+            <div className="eight wide column">
+              <h2 className="choice-h2">AI guessed </h2>
+              <h3 className="words-h3">{props.machineWord}</h3>
+            </div>
+          </div>
 
-        <h2>You guessed: {props.humanWord}</h2>
-
-        <h2>Computer guessed: {props.machineWord}</h2>
-
-        <div className="ui grid">
-          <div
-            className="ui grid eight wide column"
-          >
+          <div className="ui grid">
             <div className="eight wide column">
               <button
-                className="fluid ui button"
+                className="ui button end-buttons"
                 onClick={() => {
-                  history.push('/wordgraph')
+                  history.push(`/games/${props.game.randId}`)
                 }}
               >
                 GAME SUMMARY
@@ -82,7 +68,7 @@ const GameplayEnd = (props) => {
             </div>
             <div className="eight wide column">
               <button
-                className="fluid ui button"
+                className="ui button end-buttons"
                 onClick={props.setupGame}
               >
                 TRY AGAIN?
@@ -90,6 +76,7 @@ const GameplayEnd = (props) => {
             </div>
           </div>
         </div>
+
       </div>
     )
   }

@@ -8,8 +8,8 @@ import { LandingPage } from './components/LandingPage'
 import WordGraph from './components/WordGraph'
 import { TutorialSlides } from './components/TutorialSlides'
 import Gameplay from './components/Gameplay'
-import { GameplayStart } from './components/GameplayStart'
-import { Background } from './components/Background'
+import GameplayStart from './components/GameplayStart'
+import {Background} from './components/Background'
 import GameplayEnd from './components/GameplayEnd'
 import PCAGraph from './components/PCAGraph'
 
@@ -35,9 +35,13 @@ class Routes extends Component {
             />
 
             <Route
-              component={WordGraph}
-              exact path="/wordgraph"
+              exact path="/gameplay/:gameId/end"
+              render = { (props) => <GameplayEnd gameId = {props.match.params.gameId}/>}
             />
+
+            <Route
+             exact path="/games/:gameId" render = { (props) => <WordGraph gameId = {props.match.params.gameId}/>}
+             />
 
             <Route
               component={GameplaySummary}
@@ -62,10 +66,6 @@ class Routes extends Component {
               path="/gameplay"
             />
 
-            <Route
-              component={GameplayEnd}
-              exact path="/gameplay/end"
-            />
 
             <Route
               component={PCAGraph}

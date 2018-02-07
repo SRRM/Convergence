@@ -1,7 +1,9 @@
+import Proptypes from 'prop-types'
 import React, { Component } from 'react'
+React.PropTypes = Proptypes
 import { connect } from 'react-redux'
 // import { Chart } from 'react-d3-core'
-var ScatterPlot = require('react-d3-basic').ScatterPlot
+import { VictoryChart, VictoryScatter, VictoryTheme } from 'victory'
 
 const dummyData = [
   [2.5, 2.4],
@@ -19,6 +21,13 @@ const dummyData = [
   y: pair[1]
 }));
 
+// const dummyData = [
+//   {
+//     label: 'dummyStuff',
+//     values: dummyArray
+//   }
+// ]
+
 console.log('visited PCA Graph')
 
 const chartSeries = [
@@ -30,9 +39,8 @@ const chartSeries = [
   }
 ];
 
-const xAccessor = d => d.x
-
-const yAccessor = d => d
+// const xAccessor = d => d.x
+// const yAccessor = d => d
 
 class PCAGraph extends Component {
   constructor() {
@@ -42,23 +50,19 @@ class PCAGraph extends Component {
 
   render() {
     return (
-      // <Chart
-      //   title="PCA"
-      //   id="test-chart"
-      //   width={this.sideLength + 50}
-      //   height={this.sideLength + 50}
-      // >
-        <ScatterPlot
-          data={dummyData}
-          width={this.sideLength}
-          height={this.sideLength}
-          x={xAccessor}
-          y={yAccessor}
-          chartSeries={chartSeries}
-          xDomain={[0, 4]}
-          yDomain={[0, 4]}
-        />
-      // </Chart>
+      <div className="overlay">
+        <VictoryChart
+          theme={VictoryTheme.grayscale}
+          domain={{ x: [0, 5], y: [0, 7] }}
+          id={'pca-chart'}
+        >
+          <VictoryScatter
+            style={{ data: { fill: "#000" } }}
+            size={2}
+            data={dummyData}
+          />
+        </VictoryChart>
+      </div>
     )
   }
 }
