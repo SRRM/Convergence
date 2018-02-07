@@ -6,18 +6,27 @@ module.exports = function (router, shared) {
   const { Game, Round } = require('../../db/models')
 
   //get all completed games and total rounds each took
-  router.get('/api/games', async (req, res, next) => {
+  router.get('/api/games/:pageNumber', async (req, res, next) => {
     try {
+      let pageNum = req.params.pageNumber
+      let offset = (pageNum - 1) * 10
       const games = await Game.findAll({
-        group: ['game.id'],
-        attributes: ['id', [Sequelize.fn('COUNT', Sequelize.col('rounds.id')), 'totalRounds']],
+        order: [['createdAt', 'DESC']],
+        offset: offset,
+        limit: 10,
         include: [{
           model: Round,
-          attributes: [],
-          duplicating: false
         }]
       })
-      res.json(games)
+      const result = games.map( game =>
+      ({
+        randId: game.randId,
+        createdAt: game.createdAt,
+        userWord: game.rounds[game.rounds.length - 1].userWord,
+        machineOneWord: game.rounds[game.rounds.length - 1].machineOneWord,
+        roundCount: game.rounds.length - 1,
+      }))
+      res.json(result)
     }
     catch (error) {
       next(error)
@@ -43,3 +52,16 @@ module.exports = function (router, shared) {
   })
 }
 
+
+
+// const games = await Game.findAll({
+//   group: ['game.id'],
+//   order: [['createdAt', 'DESC']],
+//   limit: 15,
+//   attributes: ['id', 'randId', [Sequelize.fn('COUNT', Sequelize.col('rounds.id')), 'totalRounds']],
+//   include: [{
+//     model: Round,
+//     attributes: [],
+//     duplicating: false
+//   }]
+// })
