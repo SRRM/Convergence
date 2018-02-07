@@ -21,7 +21,8 @@ class WordGraph extends Component {
     const arr = this.props.rounds
     const canvas = document.querySelector('#visualizer')
     canvas.setAttribute('width', document.querySelector('#canvas-wrapper').clientWidth)
-    canvas.setAttribute('height', document.querySelector('#canvas-wrapper').clientHeight)
+    // canvas.setAttribute('height', document.querySelector('#canvas-wrapper').clientHeight)
+    canvas.setAttribute('height', 16*44)
     const ctx = canvas.getContext('2d')
 
     const midpoint = document.querySelector('#canvas-wrapper').clientWidth / 2
@@ -59,6 +60,7 @@ class WordGraph extends Component {
   render() {
     return (
       <div className='overlay'>
+
         <h2 className="page-title">Game Overview</h2>
         <div id="canvas-wrapper">
           <canvas id="visualizer"></canvas>
@@ -86,6 +88,7 @@ class WordGraph extends Component {
           <div className="five wide column"></div>
         </div>
       </div>
+
     )
   }
 }
