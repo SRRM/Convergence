@@ -14,6 +14,7 @@ const CORRECT_BAD_INPUT = "CORRECT_BAD_INPUT"
 const CLEAR_ERROR = "CLEAR_ERROR"
 const GET_GAME_ROUNDS = "GET_GAME_ROUNDS"
 
+
 //ACTION CREATORS
 const updateHumanWordActionCreator = word => ({ type: SUBMIT_WORD, word })
 const getFirstMachineWordActionCreator = word => ({ type: SUBMIT_WORD, word })
