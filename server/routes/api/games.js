@@ -6,7 +6,7 @@ module.exports = function (router, shared) {
   const { Game, Round } = require('../../db/models')
 
   //get all completed games and total rounds each took
-  router.get('/api/games/:pageNumber', async (req, res, next) => {
+  router.get('/api/games/history/:pageNumber', async (req, res, next) => {
     try {
       let pageNum = req.params.pageNumber
       let offset = (pageNum - 1) * 10
