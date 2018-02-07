@@ -67,17 +67,19 @@ module.exports = async function PCA(data) {
 
     const eigResult = await eig(covarianceMatrix)
 
+    // console.log('eigenpairs: ', eigResult)
+
     const firstVector = eigResult.eigenvectors[0].reverse()
     const secondVector = eigResult.eigenvectors[1].reverse()
 
     const featureVector = [firstVector, secondVector]
 
-    console.log(math.size(featureVector))
+    // console.log(math.size(featureVector))
     // console.log('\n feature vector: \n', featureVector)
 
     const rowDataAdjust = transposeddata
 
-    console.log(math.size(rowDataAdjust))
+    // console.log(math.size(rowDataAdjust))
 
     const finalData = math.multiply(featureVector, rowDataAdjust)
     // console.log('\nfinalData: \n', finalData, '\n')

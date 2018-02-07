@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 React.PropTypes = Proptypes
 import { connect } from 'react-redux'
 // import { Chart } from 'react-d3-core'
-import { VictoryChart, VictoryScatter, VictoryTheme, VictoryTooltip } from 'victory'
+import { VictoryChart, VictoryScatter, VictoryTheme, VictoryTooltip, VictoryAxis } from 'victory'
+import { getPCAThunkCreator } from '../reducer';
 
 const dummyData = [
   [2.5, 2.4, 'hello'],
@@ -46,7 +47,11 @@ const chartSeries = [
 class PCAGraph extends Component {
   constructor() {
     super();
-    this.sideLength = 400
+    this.sideLength = 600
+  }
+
+  componentDidMount(){
+    this.props.getPCA()
   }
 
   render() {
@@ -54,13 +59,16 @@ class PCAGraph extends Component {
       <div className="overlay">
         <VictoryChart
           theme={VictoryTheme.grayscale}
-          domain={{ x: [0, 5], y: [0, 7] }}
+          domain={{ x: [-0.25, 0.25], y: [-0.25, 0.25] }}
+          height={this.sideLength}
+          width={this.sideLength}
           id={'pca-chart'}
         >
+
           <VictoryScatter
-            style={{ data: { fill: "#000" } }}
-            size={5}
-            data={dummyData}
+            style={{ data: { fill: "#fa0" } }}
+            size={2}
+            data={this.props.PCA}
             labelComponent={<VictoryTooltip />}
           />
         </VictoryChart>
@@ -68,4 +76,15 @@ class PCAGraph extends Component {
     )
   }
 }
-export default PCAGraph
+
+const mapState = state => ({
+  PCA: state.PCA
+})
+
+const mapDispatch = dispatch => ({
+  getPCA: () => {
+    dispatch(getPCAThunkCreator())
+  }
+})
+
+export default connect(mapState, mapDispatch)(PCAGraph)
