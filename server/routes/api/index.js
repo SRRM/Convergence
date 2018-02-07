@@ -8,6 +8,7 @@ module.exports = function (app, shared) {
 
   reload('./games')(app, shared)
   reload('./play')(app, shared)
+  reload('./words')(app, shared)
 
   // router.use('/play', require('./play')(shared))
   // router.use('/games', require('./games')(shared))

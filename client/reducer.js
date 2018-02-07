@@ -14,6 +14,7 @@ const CORRECT_BAD_INPUT = "CORRECT_BAD_INPUT"
 const CLEAR_ERROR = "CLEAR_ERROR"
 const GET_GAME_ROUNDS = "GET_GAME_ROUNDS"
 const GET_PAST_GAMES = "GET_PAST_GAMES"
+const STORE_PCA = "STORE_PCA"
 
 //ACTION CREATORS
 const updateHumanWordActionCreator = word => ({ type: SUBMIT_WORD, word })
@@ -31,6 +32,8 @@ const correctBadInputActionCreator = (error, newInput) => ({type: CORRECT_BAD_IN
 const clearErrorActionCreator = () => ({type: CLEAR_ERROR})
 const getGameRoundsActionCreater = (result) => ({type: GET_GAME_ROUNDS, result})
 const getPastGamesActionCreator = (result) => ({type: GET_PAST_GAMES, result})
+const storePCAActionCreator = PCA => ({ type: STORE_PCA, PCA })
+
 
 //THUNK CREATORS
 export const getFirstMachineWordThunkCreator = () =>
@@ -52,7 +55,7 @@ export const setupGameThunkCreator = (personality, userWord, computerWord) =>
     })
       .then(res => res.data)
       .then(result => {
-        if (!result.error){
+        if (!result.error) {
           dispatch(setupGameActionCreator(result.game))
           dispatch(addRoundActionCreator(result.firstRound))
           dispatch(updateHiddenGuessActionCreator(result.machineFirstGuess))
@@ -72,7 +75,7 @@ export const setupGameThunkCreator = (personality, userWord, computerWord) =>
         // dispatch(updateHiddenGuessActionCreator(result.machineFirstGuess))
         console.log(err)
       })
-    }
+  }
 
 export const postRoundThunkCreator = (userWord, computerWord, gameId, personality, roundNumber) => dispatch => {
   dispatch(toggleAwaitingReplyActionCreator())
@@ -87,7 +90,7 @@ export const postRoundThunkCreator = (userWord, computerWord, gameId, personalit
   })
     .then(res => res.data)
     .then(result => {
-      if (!result.error){
+      if (!result.error) {
         dispatch(addRoundActionCreator(result.newRound))
         dispatch(updateHiddenGuessActionCreator(result.machineOneGuess))
         dispatch(toggleAwaitingReplyActionCreator())
@@ -145,13 +148,18 @@ export const resetGameThunkCreator = () => dispatch =>
       dispatch(resetGameActionCreator(result.computerWord))
     })
     .catch(err => console.log(err)
-)
+    )
 
 export const getGameRoundsThunkCreator = (gameId) => dispatch =>
   axios.get(`/api/games/${gameId}`)
     .then(res => res.data)
     .then(result => dispatch(getGameRoundsActionCreater(result))
-  )
+    )
+
+export const getPCAThunkCreator = () => dispatch =>
+  axios.get('/api/words/pca')
+  .then(res => res.data)
+  .then(result => dispatch(storePCAActionCreator(result)))
 
 export const getPastGamesThunkCreator = (page) => dispatch =>
   axios.get(`/api/games/history/${page}`)
@@ -170,7 +178,8 @@ const initialState = {
   roundNumber: 1,
   awaitingReply: false,
   error: '',
-  gameHistory: []
+  gameHistory: [],
+  PCA: []
 }
 
 //REDUCER
@@ -193,15 +202,17 @@ function reducer(state = initialState, action) {
     case RESET_GAME:
       return Object.assign({}, initialState, { machineWord: action.word })
     case TOGGLE_AWAITING_REPLY:
-      return Object.assign({}, state, {awaitingReply: !state.awaitingReply})
+      return Object.assign({}, state, { awaitingReply: !state.awaitingReply })
     case CORRECT_BAD_INPUT:
-      return Object.assign({}, state, {humanWord: action.newInput, error: action.error})
+      return Object.assign({}, state, { humanWord: action.newInput, error: action.error })
     case CLEAR_ERROR:
-      return Object.assign({}, state, {error: ''})
+      return Object.assign({}, state, { error: '' })
     case GET_GAME_ROUNDS:
       return Object.assign({}, state, {rounds: action.result.rounds, game: action.result})
     case GET_PAST_GAMES:
       return Object.assign({}, state, {gameHistory: action.result})
+    case STORE_PCA:
+      return Object.assign({}, state, { PCA: action.PCA })
     default:
       return state;
   }
