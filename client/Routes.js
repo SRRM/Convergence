@@ -11,6 +11,7 @@ import Gameplay from './components/Gameplay'
 import GameplayStart from './components/GameplayStart'
 import {Background} from './components/Background'
 import GameplayEnd from './components/GameplayEnd'
+import GamesTable from './components/GamesTable'
 
 import store from './store'
 import axios from 'axios'
@@ -37,6 +38,10 @@ class Routes extends Component {
               exact path="/gameplay/:gameId/end"
               render = { (props) => <GameplayEnd gameId = {props.match.params.gameId}/>}
             />
+
+            <Route
+             exact path="/games/history/:page" render = { (props) => <GamesTable page = {props.match.params.page}/>}
+             />
 
             <Route
              exact path="/games/:gameId" render = { (props) => <WordGraph gameId = {props.match.params.gameId}/>}

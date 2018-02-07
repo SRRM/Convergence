@@ -13,6 +13,7 @@ const TOGGLE_AWAITING_REPLY = "TOGGLE_AWAITING_REPLY"
 const CORRECT_BAD_INPUT = "CORRECT_BAD_INPUT"
 const CLEAR_ERROR = "CLEAR_ERROR"
 const GET_GAME_ROUNDS = "GET_GAME_ROUNDS"
+const GET_PAST_GAMES = "GET_PAST_GAMES"
 
 //ACTION CREATORS
 const updateHumanWordActionCreator = word => ({ type: SUBMIT_WORD, word })
@@ -29,6 +30,7 @@ export const toggleAwaitingReplyActionCreator = () => ({type: TOGGLE_AWAITING_RE
 const correctBadInputActionCreator = (error, newInput) => ({type: CORRECT_BAD_INPUT, error, newInput})
 const clearErrorActionCreator = () => ({type: CLEAR_ERROR})
 const getGameRoundsActionCreater = (result) => ({type: GET_GAME_ROUNDS, result})
+const getPastGamesActionCreator = (result) => ({type: GET_PAST_GAMES, result})
 
 //THUNK CREATORS
 export const getFirstMachineWordThunkCreator = () =>
@@ -151,6 +153,12 @@ export const getGameRoundsThunkCreator = (gameId) => dispatch =>
     .then(result => dispatch(getGameRoundsActionCreater(result))
   )
 
+export const getPastGamesThunkCreator = (page) => dispatch =>
+  axios.get(`api/games/history/${page}`)
+    .then(res => res.data)
+    .then(result => dispatch(getPastGamesActionCreator(result))
+  )
+
 //INITIAL STATE
 const initialState = {
   machineWord: '',
@@ -160,7 +168,8 @@ const initialState = {
   rounds: [],
   roundNumber: 1,
   awaitingReply: false,
-  error: ''
+  error: '',
+  gameHistory: []
 }
 
 //REDUCER
@@ -190,6 +199,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, {error: ''})
     case GET_GAME_ROUNDS:
       return Object.assign({}, state, {rounds: action.result.rounds, game: action.result})
+    case GET_PAST_GAMES:
+      return Object.assign({}, state, {gameHistory: action.result})
     default:
       return state;
   }
