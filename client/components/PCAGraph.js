@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { VictoryChart, VictoryScatter, VictoryTheme, VictoryTooltip } from 'victory'
 
 const dummyData = [
-  [2.5, 2.4],
+  [2.5, 2.4, 'hello'],
   [0.5, 0.7],
   [2.2, 2.9],
   [1.9, 2.2],
@@ -19,7 +19,7 @@ const dummyData = [
 ].map(pair => ({
   x: pair[0],
   y: pair[1],
-  label: "word"
+  label: pair.length>2 ? pair[2] : undefined
 }));
 
 // const dummyData = [
