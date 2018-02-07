@@ -3,14 +3,15 @@ import { connect } from 'react-redux'
 import { Route, Switch, Router } from 'react-router-dom'
 import history from './history'
 import Main from './components/Main'
-import {GameplaySummary } from './components/GameplaySummary'
+import { GameplaySummary } from './components/GameplaySummary'
 import { LandingPage } from './components/LandingPage'
-import  WordGraph  from './components/WordGraph'
+import WordGraph from './components/WordGraph'
 import { TutorialSlides } from './components/TutorialSlides'
 import Gameplay from './components/Gameplay'
-import {GameplayStart} from './components/GameplayStart'
-import {Background} from './components/Background'
+import { GameplayStart } from './components/GameplayStart'
+import { Background } from './components/Background'
 import GameplayEnd from './components/GameplayEnd'
+import PCAGraph from './components/PCAGraph'
 
 import store from './store'
 import axios from 'axios'
@@ -34,26 +35,26 @@ class Routes extends Component {
             />
 
             <Route
-             component={WordGraph}
-             exact path="/wordgraph"
-             />
+              component={WordGraph}
+              exact path="/wordgraph"
+            />
 
             <Route
               component={GameplaySummary}
               exact path="/gameplay/summary"
             />
 
-             <Route
+            <Route
               component={TutorialSlides}
               exact
               path="/tutorial/:slideNumber"
             />
 
-             <Route
-               component={GameplayStart}
-               exact
-               path="/gameplay/start"
-             />
+            <Route
+              component={GameplayStart}
+              exact
+              path="/gameplay/start"
+            />
 
             <Route
               component={Gameplay}
@@ -64,6 +65,11 @@ class Routes extends Component {
             <Route
               component={GameplayEnd}
               exact path="/gameplay/end"
+            />
+
+            <Route
+              component={PCAGraph}
+              exact path="/admin/pca"
             />
 
             {/* Displays LandingPage as a fallback */}
