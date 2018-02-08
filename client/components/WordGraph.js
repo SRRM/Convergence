@@ -33,13 +33,14 @@ class WordGraph extends Component {
 
     ctx.font = `${wordHeight}pt Arial`
     const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1)
-
+    const fishWidth = document.body.clientWidth * 0.7
     const drawRow = (row, idx) => {
       const topEdge = wordHeight * 2 * idx
       const bottomEdge = topEdge + wordHeight
       const middle = topEdge + halfOfHeight
       const { word1, word2, dist } = row
-      const lineLength = (dist) * 1000 + 3
+      // const lineLength = (dist) * 1000 + 3
+      const lineLength = (dist * dist) * 2000 + 3
       const lineOpacity = lineLength / 1003 * 0.9
       console.log(lineOpacity)
       // ctx.fillRect(0, topEdge, 900, 1)
