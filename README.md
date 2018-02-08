@@ -3,9 +3,9 @@ A Game of Cooperative Word Alchemy.
 
 
 ## Playing the Game
-At the beginning of each game, our AI has selected at random a starting word out of the 1500 most common nouns in the English language. You will also get to pick your own starting word. Once the starting words are revealed, the objective of the game is try to guess the same word as the AI in subsequent rounds. 
+Prior to gameplay, our AI has selects a word from the most common nouns in the English language. At the beginning of the game, the user will also get to choose a starting word. Once these words are revealed, the objective is to guess the same word as the AI. How might one accomplish such a challenging task? 
 
-The key is to try to meet halfway by guessing words that have some semantic relationship to the words you and the AI have previously chosen. For example, if you choose 'lava' as your first word, and the AI selects 'water', then 'liquid', 'caldera', and 'steam' might be good guesses. You get a maximum of 20 chances to converge on the same word.
+The key is to try to meet halfway by guessing words that have some semantic relationship to previously guessed words. For example, if one chooses 'lava' as a first word, and the AI selects 'water', then 'liquid', 'caldera', and 'steam' might be good guesses. Each game has maximum of 20 chances to converge on the same word.
 
 ## Built With
 
