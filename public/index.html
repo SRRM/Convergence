@@ -357,8 +357,71 @@
 }
 
 /*MOBILE ONLY */
-#landing-page-info h1 img {
-  width: 20rem;
+@media (max-width: 600px) {
+  #landing-page-info {
+    top: 50%;
+  }
+
+  #landing-page-info h1 img {
+    width: 20rem;
+  }
+
+  #landing-page-info h2 {
+    font-size: 1.75rem;
+    padding: 0 2rem;
+  }
+
+  #center-action-button{
+    font-size: 1.75rem;
+  }
+
+  .tutorial-slide, div#game-setup {
+    width: calc(100% - 2rem);
+  }
+
+  .tutorial-p {
+    height: 16rem;
+  }
+
+  #game-setup-form div.eight.wide.column, 
+  .choice-info div.eight.wide.column,
+  #user-guess-form div.six.wide.column,
+  #user-guess-form div.ten.wide.column,
+  .game-over-info div.eight.wide.column {
+    width: 100% !important;
+  }
+
+  .choice-info{
+    width: 100%;
+  }
+
+  #user-guess-form {
+    width: 100% !important;
+  }
+
+  div#error-component{
+    top: 0%;
+  }
+
+  .game-over-info{
+    width: 100%;
+  }
+
+  .winning, .losing {
+    font-size: 4rem;
+  }
+
+  #game-summary-button {
+    display: none;
+  }
+
+  .game-over-info h2 {
+    padding: 0 2rem;
+  }
+
+  .game-over-info h4, .game-over-info button {
+    font-size: 1.25rem;
+  }
 }
   </style>
 </head>
