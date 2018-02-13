@@ -19,6 +19,7 @@ const GameplayEnd = (props) => {
         <div className="ui grid">
           <div className="eight wide column">
             <button
+              id="game-summary-button"
               className="ui button end-buttons"
               onClick={() => {
                 history.push(`/games/${props.game.randId}`)
@@ -58,6 +59,7 @@ const GameplayEnd = (props) => {
           <div className="ui grid">
             <div className="eight wide column">
               <button
+                id="game-summary-button"
                 className="ui button end-buttons"
                 onClick={() => {
                   history.push(`/games/${props.game.randId}`)
