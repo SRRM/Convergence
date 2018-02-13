@@ -13,6 +13,7 @@ const TOGGLE_AWAITING_REPLY = "TOGGLE_AWAITING_REPLY"
 const CORRECT_BAD_INPUT = "CORRECT_BAD_INPUT"
 const CLEAR_ERROR = "CLEAR_ERROR"
 const GET_GAME_ROUNDS = "GET_GAME_ROUNDS"
+const GET_PAST_GAMES = "GET_PAST_GAMES"
 const STORE_PCA = "STORE_PCA"
 
 //ACTION CREATORS
@@ -26,11 +27,13 @@ const updateHiddenGuessActionCreator = guess => ({ type: UPDATE_HIDDEN_GUESS, gu
 export const incrementRoundActionCreator = () => ({ type: INCREMENT_ROUND })
 const updateGameStatusActionCreator = game => ({ type: UPDATE_GAME_STATUS, game })
 const resetGameActionCreator = word => ({ type: RESET_GAME, word })
-export const toggleAwaitingReplyActionCreator = () => ({ type: TOGGLE_AWAITING_REPLY })
-const correctBadInputActionCreator = (error, newInput) => ({ type: CORRECT_BAD_INPUT, error, newInput })
-const clearErrorActionCreator = () => ({ type: CLEAR_ERROR })
-const getGameRoundsActionCreater = (result) => ({ type: GET_GAME_ROUNDS, result })
+export const toggleAwaitingReplyActionCreator = () => ({type: TOGGLE_AWAITING_REPLY})
+const correctBadInputActionCreator = (error, newInput) => ({type: CORRECT_BAD_INPUT, error, newInput})
+const clearErrorActionCreator = () => ({type: CLEAR_ERROR})
+const getGameRoundsActionCreater = (result) => ({type: GET_GAME_ROUNDS, result})
+const getPastGamesActionCreator = (result) => ({type: GET_PAST_GAMES, result})
 const storePCAActionCreator = PCA => ({ type: STORE_PCA, PCA })
+
 
 //THUNK CREATORS
 export const getFirstMachineWordThunkCreator = () =>
@@ -158,6 +161,13 @@ export const getPCAThunkCreator = () => dispatch =>
   .then(res => res.data)
   .then(result => dispatch(storePCAActionCreator(result)))
 
+export const getPastGamesThunkCreator = (page) => dispatch =>
+  axios.get(`/api/games/history/${page}`)
+    .then(res => res.data)
+    .then(result =>
+      dispatch(getPastGamesActionCreator(result))
+  )
+
 //INITIAL STATE
 const initialState = {
   machineWord: '',
@@ -168,6 +178,7 @@ const initialState = {
   roundNumber: 1,
   awaitingReply: false,
   error: '',
+  gameHistory: [],
   PCA: []
 }
 
@@ -197,7 +208,9 @@ function reducer(state = initialState, action) {
     case CLEAR_ERROR:
       return Object.assign({}, state, { error: '' })
     case GET_GAME_ROUNDS:
-      return Object.assign({}, state, { rounds: action.result.rounds, game: action.result })
+      return Object.assign({}, state, {rounds: action.result.rounds, game: action.result})
+    case GET_PAST_GAMES:
+      return Object.assign({}, state, {gameHistory: action.result})
     case STORE_PCA:
       return Object.assign({}, state, { PCA: action.PCA })
     default:

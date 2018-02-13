@@ -14,12 +14,11 @@ export const LandingPage = () => {
   return (
       <div className="overlay">
       <div id="landing-page-info">
-        <h1 id="title">Convergence</h1>
+        {/*<h1 id="title">Convergence</h1>*/}
+        <h1><img src="conv_logo_med.png" /></h1>
         <h2>
           A Game of Cooperative Word Alchemy
         </h2>
-        
-        
           <button
           id="center-action-button"
             className="ui button"
