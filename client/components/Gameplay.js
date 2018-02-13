@@ -41,7 +41,7 @@ class Gameplay extends Component {
             store.dispatch(winGameThunkCreator(gameId, userGuess, roundNumber))
             console.log('winning thunk dispatched!!!!')
             history.push(`/gameplay/${this.props.game.randId}/end`)
-        } else if (roundNumber >= 2) {
+        } else if (roundNumber >= 20) {
             // dispatch lose game thunk creator
             // console.log('failure :(')
             store.dispatch(loseGameThunkCreator(gameId, userGuess, computerGuess, roundNumber))
