@@ -30,8 +30,6 @@ const dummyData = [
 //   }
 // ]
 
-console.log('visited PCA Graph')
-
 const chartSeries = [
   {
     field: 'y',

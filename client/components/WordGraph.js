@@ -22,7 +22,7 @@ class WordGraph extends Component {
     const canvas = document.querySelector('#visualizer')
     canvas.setAttribute('width', document.querySelector('#canvas-wrapper').clientWidth)
     // canvas.setAttribute('height', document.querySelector('#canvas-wrapper').clientHeight)
-    canvas.setAttribute('height', 16*44)
+    canvas.setAttribute('height', 16 * 44)
     const ctx = canvas.getContext('2d')
 
     const midpoint = document.querySelector('#canvas-wrapper').clientWidth / 2
@@ -41,7 +41,6 @@ class WordGraph extends Component {
       const { word1, word2, dist } = row
       const lineLength = (dist) * 1000 + 3
       const lineOpacity = lineLength / 1003 * 0.9
-      console.log(lineOpacity)
       // ctx.fillRect(0, topEdge, 900, 1)
       // ctx.fillRect(0, bottomEdge, 900, 1)
       ctx.fillStyle = `rgba(141, 132, 142, ${lineOpacity})`
@@ -66,7 +65,7 @@ class WordGraph extends Component {
           <canvas id="visualizer"></canvas>
         </div>
         <div className="ui grid">
-        <div className="five wide column"></div>
+          <div className="five wide column"></div>
           <div className="three wide column">
             <button
               id="game-summary-play-button"

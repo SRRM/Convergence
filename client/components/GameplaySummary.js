@@ -129,8 +129,6 @@ import {Container, Row, Col} from 'react-grid-system'
 
 const onClickNode = function(nodeId) {
     //  window.alert('Clicked node ${nodeId}');
-    console.log('clicked', nodeId)
-    console.log('clicked', nodeId.children)
 };
 
 const onMouseOverNode = function(nodeId) {
