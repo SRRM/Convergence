@@ -1,5 +1,7 @@
 # Convergence
-A Game of Cooperative Word Alchemy. 
+A Game of Cooperative Word Alchemy
+<br><br>
+https://wordconvergence.tk
 
 
 ## Playing the Game
@@ -23,7 +25,7 @@ npm run go-dev
 ## Built With
 
 - [word2vec](https://www.npmjs.com/package/word2vec)
-
+- [particles.js](https://github.com/VincentGarreau/particles.js/)
 
 
 ## Built By
@@ -36,6 +38,6 @@ npm run go-dev
 
 ## Acknowledgements
 
-Special thanks to [Collin](https://github.com/collin)
+Special thanks to [Collin](https://github.com/collin) for general awesomeness and architectural wizardry.
 
 
