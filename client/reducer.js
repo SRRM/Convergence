@@ -119,7 +119,7 @@ export const winGameThunkCreator = (gameId, userWord, roundNumber) => dispatch =
     .then(result => {
       dispatch(addRoundActionCreator(result.newRound))
       dispatch(updateGameStatusActionCreator(result.game))
-      console.log(result)
+      //console.log(result)
       // history.push
     })
 }
@@ -136,7 +136,7 @@ export const loseGameThunkCreator = (gameId, userWord, computerWord, roundNumber
     .then(result => {
       dispatch(addRoundActionCreator(result.newRound))
       dispatch(updateGameStatusActionCreator(result.game))
-      console.log(result)
+      //console.log(result)
       // history.push
     })
 }
