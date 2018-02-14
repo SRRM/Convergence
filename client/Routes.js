@@ -80,7 +80,7 @@ class Routes extends Component {
             {/* Displays LandingPage as a fallback */}
             <Route component={LandingPage} />
           </Switch>
-          <Particles
+      { window.innerWidth >= 600 &&  <Particles
             className="particles"
             params={{
               particles: {
@@ -117,6 +117,8 @@ class Routes extends Component {
               background: 'linear-gradient(#C9D2F2, #F9D9EA, #F7D091)'
             }}
           />
+            || <div className="mobile-background"></div>
+          }
         </Main>
       </Router>
     )
