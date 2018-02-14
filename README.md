@@ -1,5 +1,4 @@
 # Convergence
-<br>
 A Game of Cooperative Word Alchemy
 <br>
 https://wordconvergence.tk
