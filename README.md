@@ -7,13 +7,35 @@ Prior to gameplay, our AI selects a word from the most common nouns in the Engli
 
 The key is to try to meet halfway by guessing words that have some semantic relationship to previously guessed words. For example, if one chooses 'lava' as a first word, and the AI selects 'water', then 'liquid', 'caldera', and 'steam' might be good guesses. Each game has maximum of 20 chances to converge on the same word.
 
+The user also has the option of selecting a 'personality' for the AI. The 'personality' only influences gameplay when the words in play are sufficiently close to personality keywords.
+
+## Installing
+
+You'll need [Node.js](https://nodejs.org/en/download/), then
+```
+npm install
+```
+To run [locally](http://localhost:3000/)
+```
+npm run go-dev
+```
+ 
 ## Built With
 
 - [word2vec](https://www.npmjs.com/package/word2vec)
-- [wordnet](https://www.npmjs.com/package/wordnet)
-- [react-d3](https://www.npmjs.com/package/react-d3)
+
+
 
 ## Built By
-[Us](https://github.com/SRRM/Convergence/graphs/contributors).
+
+- [Mike](https://github.com/mikekanter)
+- [Raul](https://github.com/RaulVinueza)
+- [Ray](https://github.com/rutvikhp)
+- [Shannon](https://github.com/scwikla)
+
+
+## Acknowledgements
+
+Thanks be to [Collin](https://github.com/collin).
 
 
