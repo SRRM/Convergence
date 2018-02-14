@@ -36,6 +36,6 @@ npm run go-dev
 
 ## Acknowledgements
 
-Thanks be to [Collin](https://github.com/collin).
+Special thanks to [Collin](https://github.com/collin)
 
 
