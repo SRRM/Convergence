@@ -26,7 +26,7 @@ class Gameplay extends Component {
     handleClick(evt) {
         evt.preventDefault()
         // console.log('from form')
-        const userGuess = this.state.inputValue
+        const userGuess = this.state.inputValue.toLowerCase()
         this.setState({ inputValue: '' })
         // document.getElementById('user-guess-form-button').disabled = true;
         const computerGuess = store.getState().machineHiddenGuess
