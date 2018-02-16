@@ -19,7 +19,7 @@ class GameplayStart extends Component {
         evt.preventDefault()
             const computerWord = store.getState().machineWord
             const personality = evt.target.personality.value
-            const userWord = this.state.inputValue
+            const userWord = this.state.inputValue.toLowerCase()
             store.dispatch(storeHumanWordActionCreator(userWord))
             store.dispatch(setupGameThunkCreator(personality, userWord, computerWord))
             history.push(`/gameplay`)
@@ -32,7 +32,7 @@ class GameplayStart extends Component {
     render(){
         return (
             <div className="overlay" >
-                <div id="game-setup"> 
+                <div id="game-setup">
                 <h2>Game Setup</h2>
                     <form
                         id="game-setup-form"
@@ -43,7 +43,7 @@ class GameplayStart extends Component {
                             placeholder="What is your AI into?"
                             id="personality-textarea"
                             name="personality"
-                            
+
                             >
                             </input>
                         <div id="first-word-form-subsection" className="ui grid">
@@ -62,15 +62,15 @@ class GameplayStart extends Component {
                                     className="fluid ui button"
                                     disabled = {!this.state.inputValue.length}
                                 >
-                                    BEGIN 
+                                    BEGIN
                                 </button>
                             </div>
-                        </div>  
+                        </div>
                     </form>
-                </div>   
+                </div>
             </div>
         )
-    }   
+    }
 }
 
 export default GameplayStart
