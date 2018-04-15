@@ -1,7 +1,7 @@
 # Convergence
 A Game of Cooperative Word Alchemy
 <br>
-https://wordconvergence.tk
+https://wordconvergence.ml
 
 
 ## Playing the Game
